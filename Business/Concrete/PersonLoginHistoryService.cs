@@ -21,10 +21,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<PersonLoginHistory> _repository;
         
-        public PersonLoginHistoryService(IRepository<PersonLoginHistory> repository,IUserService userService) : base(repository)
+        public PersonLoginHistoryService(IRepository<PersonLoginHistory> repository) : base(repository)
         {
             _repository = repository;
-            userService.Check(new List<PersonType> {PersonType.Admin,PersonType.Doctor});
         }
 
         public async Task<List<PersonLoginHistory>> GetPersonHistory(int personId)

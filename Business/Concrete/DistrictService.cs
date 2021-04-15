@@ -19,10 +19,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<District> _repository;
         
-        public DistrictService(IRepository<District> repository, IUserService userService) : base(repository)
+        public DistrictService(IRepository<District> repository) : base(repository)
         {
             _repository = repository;
-            userService.Check(new List<PersonType> {PersonType.Admin});
         }
         
    

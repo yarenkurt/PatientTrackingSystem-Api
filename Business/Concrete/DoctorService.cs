@@ -36,8 +36,6 @@ namespace Business.Concrete
             _questionRepo = questionRepo;
             _userService = userService;
             _smsHelper = smsHelper;
-
-            userService.Check(new List<PersonType> {PersonType.Admin});
         }
         
 

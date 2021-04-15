@@ -19,11 +19,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<AnswerPool> _repository;
         
-        public AnswerPoolService(IRepository<AnswerPool> repository, IUserService userService) : base(repository)
+        public AnswerPoolService(IRepository<AnswerPool> repository) : base(repository)
         {
             _repository = repository;
-            
-            userService.Check(new List<PersonType> {PersonType.Doctor});
         }
         
   

@@ -21,10 +21,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<DoctorPatient> _repository;
         
-        public DoctorPatientService(IRepository<DoctorPatient> repository,IUserService userService) : base(repository)
+        public DoctorPatientService(IRepository<DoctorPatient> repository) : base(repository)
         {
             _repository = repository;
-            userService.Check(new List<PersonType> {PersonType.Admin,PersonType.Doctor});
         }
 
         public async Task<int> CountPatientOfDoctor(int doctorId)

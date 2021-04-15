@@ -18,10 +18,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<PatientRelative> _repository;
         
-        public PatientRelativeService(IRepository<PatientRelative> repository,IUserService userService) : base(repository)
+        public PatientRelativeService(IRepository<PatientRelative> repository) : base(repository)
         {
             _repository = repository;
-            userService.Check(new List<PersonType> {PersonType.Patient});
         }
 
         public async Task<List<PatientRelative>> GetAllAsync(int patientId)

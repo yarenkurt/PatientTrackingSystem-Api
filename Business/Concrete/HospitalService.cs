@@ -18,10 +18,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<Hospital> _repository;
         
-        public HospitalService(IRepository<Hospital> repository,IUserService userService) : base(repository)
+        public HospitalService(IRepository<Hospital> repository) : base(repository)
         {
             _repository = _repository;
-            userService.Check(new List<PersonType> {PersonType.Admin});
         }
 
         public async Task<List<Hospital>> GetAllAsync(int districtId)

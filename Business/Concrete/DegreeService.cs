@@ -19,11 +19,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<Degree> _repository;
         
-        public DegreeService(IRepository<Degree> repository, IUserService userService) : base(repository)
+        public DegreeService(IRepository<Degree> repository) : base(repository)
         {
             _repository = repository;
-            
-            userService.Check(new List<PersonType> {PersonType.Admin});
         }
         
  

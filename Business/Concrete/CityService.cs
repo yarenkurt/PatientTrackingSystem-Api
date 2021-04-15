@@ -21,11 +21,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<City> _repository;
 
-        public CityService(IRepository<City> repository, IUserService userService) : base(repository)
+        public CityService(IRepository<City> repository) : base(repository)
         {
             _repository = repository;
-            
-            userService.Check(new List<PersonType> {PersonType.Admin});
         }
         
 

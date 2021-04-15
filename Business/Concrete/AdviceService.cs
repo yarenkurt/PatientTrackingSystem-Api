@@ -28,8 +28,6 @@ namespace Business.Concrete
             _repository = repository;
             _userService = userService;
             _doctorRepo = doctorRepo;
-
-            userService.Check(new List<PersonType> {PersonType.Doctor});
         }
 
      

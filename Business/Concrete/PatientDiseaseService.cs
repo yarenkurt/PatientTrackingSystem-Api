@@ -21,10 +21,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<PatientDisease> _repository;
         
-        public PatientDiseaseService(IRepository<PatientDisease> repository, IUserService userService) : base(repository)
+        public PatientDiseaseService(IRepository<PatientDisease> repository) : base(repository)
         {
             _repository = repository;
-            userService.Check(new List<PersonType> {PersonType.Doctor});
         }
         
         

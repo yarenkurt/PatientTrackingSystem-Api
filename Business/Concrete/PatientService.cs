@@ -31,7 +31,6 @@ namespace Business.Concrete
             _repository = repository;
             _userService = userService;
             _smsHelper = smsHelper;
-            userService.Check(new List<PersonType> {PersonType.Admin,PersonType.Doctor});
         }
 
 

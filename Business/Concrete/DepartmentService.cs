@@ -19,11 +19,9 @@ namespace Business.Concrete
     {
         private readonly IRepository<Department> _repository;
         
-        public DepartmentService(IRepository<Department> repository, IUserService userService) : base(repository)
+        public DepartmentService(IRepository<Department> repository) : base(repository)
         {
             _repository = repository;
-            
-            userService.Check(new List<PersonType> {PersonType.Admin});
         }
         
     
