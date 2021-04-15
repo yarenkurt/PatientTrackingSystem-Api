@@ -11,9 +11,7 @@ namespace Web.Models
         public int PersonId { get; set; }
 
         public Person Person { get; set; }
-        
-        [JsonIgnore]
-        public ICollection<PatientDisease> PatientDiseases { get; set; }
+
     }
 
 }

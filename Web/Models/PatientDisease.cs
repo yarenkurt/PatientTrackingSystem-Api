@@ -7,10 +7,5 @@ namespace Web.Models
         public int Id { get; set; }
         public int PatientId { get; set; }
         public int DiseaseId { get; set; }
-
-        [JsonIgnore]
-        public Patient Patient { get; set; }
-        [JsonIgnore]
-        public Disease Disease { get; set; }
     }
 }

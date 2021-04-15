@@ -9,8 +9,5 @@
         public string Email { get; set; }
         public bool IsBlocked { get; set; }
 
-        public Department Department { get; set; }
-        public Person Person { get; set; }
-        public Degree Degree { get; set; }
     }
 }

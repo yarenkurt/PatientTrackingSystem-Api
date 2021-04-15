@@ -10,8 +10,6 @@ namespace Web.Models
         public string Phone { get; set; }
 
         public int DistrictId { get; set; }
-        
-        [JsonIgnore]
-        public District District { get; set; }
+      
     }
 }

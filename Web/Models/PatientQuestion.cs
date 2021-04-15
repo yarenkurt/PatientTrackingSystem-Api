@@ -10,10 +10,5 @@ namespace Web.Models
         public int PatientId { get; set; }
         public int Day { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        [JsonIgnore]
-        public QuestionPool QuestionPool { get; set; }
-        [JsonIgnore]
-        public Patient Patient { get; set; }
     }
 }

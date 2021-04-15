@@ -9,10 +9,5 @@ namespace Web.Models
         public string Description { get; set; }
         public int CountryId { get; set; }
 
-        [JsonIgnore]
-        public Country Country { get; set; }
-        
-        [JsonIgnore]
-        public ICollection<District> Districts { get; set; }
     }
 }

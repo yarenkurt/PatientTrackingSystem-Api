@@ -10,8 +10,6 @@ namespace Web.Models
         public bool IsSuccess { get; set; }
         public DateTime Date { get; set; }
         public string Message { get; set; }
-
-        [JsonIgnore]
         public Person Person { get; set; }public string IpAddress { get; set; }
     }
 }

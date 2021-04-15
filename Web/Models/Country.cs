@@ -8,8 +8,5 @@ namespace Web.Models
         public int Id { get; set; }
         public string Description { get; set; }
         public string CountryCode { get; set; }
-
-        [JsonIgnore]
-        public ICollection<City> Cities { get; set; }
     }
 }

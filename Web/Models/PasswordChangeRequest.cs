@@ -12,6 +12,5 @@ namespace Web.Models
         public DateTime? UsedAt { get; set; }
         public DateTime ExpiredDate { get; set; }
 
-        public Person Person { get; set; }
     }
 }

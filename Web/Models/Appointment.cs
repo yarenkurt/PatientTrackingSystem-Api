@@ -10,9 +10,6 @@ namespace Web.Models
         public DateTime CreatedAt { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        
-        public Doctor Doctor { get; set; }
-        
-        public Patient Patient { get; set; }
+ 
     }
 }
