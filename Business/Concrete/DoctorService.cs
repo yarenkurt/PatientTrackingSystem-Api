@@ -105,8 +105,14 @@ namespace Business.Concrete
             };
 
             await _doctorRepo.InsertAsync(doctor);
+            var hospital =  _doctorRepo.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.PersonId == doctor.PersonId)
+                .Select(x => x.Department.Hospital.Description);
+                
+                
             await _smsHelper.SendAsync(new List<string> {doctor.Person.Gsm},
-                "Welcome to the Yeditepe Hospital \n You are registered to patientTracker.net as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
+                "Welcome to the "+ hospital + " Hospital \n You are registered to patientTracker.net as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
 
 
             var result = await _doctorRepo.TableNoTracking.Where(x => x.Id == doctor.Id)
@@ -181,6 +187,15 @@ namespace Business.Concrete
                 .ToListAsync();
         }
 
+        
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync(int hospitalId)
+        {
+            return await _doctorRepo.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.Department.HospitalId == hospitalId)
+                .CountAsync();
+        }
 
        
     }

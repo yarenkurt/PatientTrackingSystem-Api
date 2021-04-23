@@ -31,19 +31,27 @@ namespace Business.Concrete
         {
             return await _repository.GetAllAsync(c => c.CountryId == countryId);
         }
-
         
-        [SecurityAspect(PersonType.Admin)]
-        public async Task<int> CountCities()
-        {
-            return await _repository.Table.CountAsync();
-        }
-
+        
+        
         
         [SecurityAspect(PersonType.Admin)]
         public async Task<List<City>> SearchCity(string searchKey)
         {
             return await _repository.GetAllAsync(c => c.Description.Contains(searchKey));
+        }
+
+
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync()
+        {
+            return await _repository.TableNoTracking.CountAsync();
+        }
+
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<List<City>> GetAll()
+        {
+            return await _repository.GetAllAsync();
         }
     }
 }

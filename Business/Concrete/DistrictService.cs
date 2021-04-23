@@ -10,6 +10,7 @@ using Core.Enums;
 using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
@@ -28,6 +29,12 @@ namespace Business.Concrete
         public async Task<List<District>> GetAllAsync(int cityId)
         {
             return await _repository.GetAllAsync(d => d.CityId == cityId);
+        }
+        
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync()
+        {
+            return await _repository.TableNoTracking.CountAsync();
         }
     }
 }

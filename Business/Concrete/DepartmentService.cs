@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Business.Abstract;
@@ -10,6 +11,7 @@ using Core.Enums;
 using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
@@ -28,6 +30,14 @@ namespace Business.Concrete
         public async Task<List<Department>> GetAllAsync(int hospitalId)
         {
             return await _repository.GetAllAsync(d => d.HospitalId == hospitalId);
+        }
+        
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync(int hospitalId)
+        {
+            return await _repository.TableNoTracking
+                .Where(x => x.HospitalId == hospitalId)
+                .CountAsync();
         }
     }
 }

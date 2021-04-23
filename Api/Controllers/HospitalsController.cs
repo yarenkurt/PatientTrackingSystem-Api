@@ -16,9 +16,15 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] int districtId)
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(await _hospitalService.GetAllAsync(districtId));
+            return Ok(await _hospitalService.GetAllAsync());
+        }
+
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count()
+        {
+            return Ok(await _hospitalService.CountAsync());
         }
     }
 }

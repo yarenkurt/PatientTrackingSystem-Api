@@ -24,5 +24,18 @@ namespace Api.Controllers
         {
             return Ok(await _countryService.GetAllAsync());
         }
+
+
+        [HttpGet("SelectList")]
+        public async Task<IActionResult> SelectList()
+        {
+            return Ok(await _countryService.SelectListAsync());
+        }
+
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count()
+        {
+            return Ok(await _countryService.CountAsync());
+        }
     }
 }

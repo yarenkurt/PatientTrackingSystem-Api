@@ -7,6 +7,9 @@ namespace Business.Abstract
 {
     public interface IHospitalService : IServiceRepository<Hospital>
     {
-        Task<List<Hospital>> GetAllAsync(int districtId);
+        //Task<List<Hospital>> GetAllAsync(int districtId);
+        
+        Task<List<Hospital>> GetAllAsync();
+        Task<int> CountAsync();
     }
 }

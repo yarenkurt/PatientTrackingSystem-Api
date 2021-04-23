@@ -12,5 +12,7 @@ namespace Business.Abstract
          Task<List<Country>> GetAllAsync();
 
          Task<List<TreeList>> SelectListAsync();
+
+         Task<int> CountAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Api.Repositories;
 using Business.Abstract;
 using Entities.Concrete;
@@ -25,6 +26,12 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAllByDept([FromQuery] int deptId)
         {
             return Ok(await _diseaseService.GetAllAsyncByDept(deptId));
+        }
+        
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count([FromQuery, Required] int hospitalId)
+        {
+            return Ok(await _diseaseService.CountAsync(hospitalId));
         }
     }
 }

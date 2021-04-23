@@ -23,5 +23,11 @@ namespace Api.Controllers
         {
             return Ok(await _districtService.GetAllAsync(cityId));
         }
+        
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count()
+        {
+            return Ok(await _districtService.CountAsync());
+        }
     }
 }

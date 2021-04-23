@@ -4,6 +4,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using Core.Enums;
 using Core.Extensions;
+using Core.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Core.Token
@@ -21,11 +22,12 @@ namespace Core.Token
         public int PersonId  => _httpContextAccessor?.HttpContext?.User?.GetValue(ClaimTypes.NameIdentifier).ToInt() ?? 0;
         public string FullName => _httpContextAccessor?.HttpContext?.User?.GetValue(ClaimTypes.Name) ?? "";
         public PersonType PersonType =>  _httpContextAccessor?.HttpContext?.User?.GetPersonType() ?? PersonType.Patient;
-        
-        public void Check(List<PersonType> personTypes)
+
+        public UserInfo UserInfo => new UserInfo
         {
-            if (personTypes.All(x => x != PersonType))
-                throw new AuthenticationException("FORBIDDEN");
-        }
+            Id = PersonId,
+            FullName = FullName,
+            PersonType = PersonType
+        };
     }
 }

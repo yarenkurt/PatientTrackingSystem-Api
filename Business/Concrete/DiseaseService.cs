@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Repositories;
+using Business.Validations;
 using Core.Aspects.Security;
 using Core.Aspects.Validation;
 using Core.Enums;
 using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
     [SecurityAspect(PersonType.Admin)]
-    [ValidationAspect(typeof(DiseaseService))]
+    [ValidationAspect(typeof(DiseaseValidator))]
     public class DiseaseService : ServiceRepository<Disease>, IDiseaseService
     {
         private readonly IRepository<Disease> _repository;
@@ -33,6 +36,16 @@ namespace Business.Concrete
         public async Task<List<Disease>> GetAllAsyncByDept(int deptId)
         {
             return await _repository.GetAllAsync(d => d.DepartmentId == deptId);
+        }
+        
+        
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync(int hospitalId)
+        {
+            return await _repository.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.Department.HospitalId == hospitalId)
+                .CountAsync();
         }
     }
 }

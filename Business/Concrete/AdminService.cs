@@ -76,7 +76,7 @@ namespace Business.Concrete
 
             await _repository.InsertAsync(admin);
             await _smsHelper.SendAsync(new List<string> {admin.Person.Gsm},
-                "Welcome to the Yeditepe Hospital \n You are registered to patientTracker.net as Admin by "+_userService.FullName+" \n Your password is " + randomPass+"\n Wis");
+                "Welcome to the PatientTracker System. \n You are registered to patientTracker.net as Admin by "+_userService.FullName+" \n Your password is " + randomPass+"\n Wis");
             
             var result = await _repository.TableNoTracking.Where(x => x.Id == admin.Id)
                 .Include(x => x.Person)

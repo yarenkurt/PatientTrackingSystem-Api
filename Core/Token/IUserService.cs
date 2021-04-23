@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Enums;
+using Core.Models;
 
 namespace Core.Token
 {
@@ -9,7 +10,7 @@ namespace Core.Token
         int PersonId { get; }
         string FullName { get; }
         PersonType PersonType { get; }
+        UserInfo UserInfo { get; }
 
-        void Check(List<PersonType> personTypes);
     }
 }

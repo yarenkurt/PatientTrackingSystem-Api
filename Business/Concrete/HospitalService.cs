@@ -9,6 +9,7 @@ using Core.Enums;
 using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
@@ -20,12 +21,18 @@ namespace Business.Concrete
         
         public HospitalService(IRepository<Hospital> repository) : base(repository)
         {
-            _repository = _repository;
+            _repository = repository;
         }
 
-        public async Task<List<Hospital>> GetAllAsync(int districtId)
+        public async Task<List<Hospital>> GetAllAsync()
         {
-            return await _repository.GetAllAsync(h => h.DistrictId == districtId);
+            return await _repository.GetAllAsync();
+        }
+        
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync()
+        {
+            return await _repository.TableNoTracking.CountAsync();
         }
     }
 }

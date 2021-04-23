@@ -23,17 +23,23 @@ namespace Api.Controllers
         {
             return Ok(await _cityService.GetAllAsync(countryId));
         }
-
-        [HttpGet("Count")]
-        public async Task<IActionResult> Count()
+        
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(await _cityService.CountCities());
+            return Ok(await _cityService.GetAll());
         }
-
+        
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] string searchKey)
         {
             return Ok(await _cityService.SearchCity(searchKey));
+        }
+
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count()
+        {
+            return Ok(await _cityService.CountAsync());
         }
         
     }

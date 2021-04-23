@@ -8,5 +8,6 @@ namespace Business.Abstract
     public interface IDistrictService : IServiceRepository<District>
     {
         Task<List<District>> GetAllAsync(int cityId);
+        Task<int> CountAsync();
     }
 }

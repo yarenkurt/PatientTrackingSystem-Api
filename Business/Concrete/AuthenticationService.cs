@@ -75,9 +75,9 @@ namespace Business.Concrete
         }
 
 
-        public async Task<Result> LogoutAsync(int accountId)
+        public async Task<Result> LogoutAsync(int userId)
         {
-            var user = await _personRepository.GetAsync(x => x.Id == accountId);
+            var user = await _personRepository.GetAsync(x => x.Id == userId);
             if (user == null)
                 return new ErrorDataResult<TokenInfo>("User Not Found!");
 

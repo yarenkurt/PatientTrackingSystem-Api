@@ -32,7 +32,8 @@ namespace Business.Concrete
         [SecurityAspect(PersonType.Null)]
         public async Task<List<TreeList>> SelectListAsync()
         {
-            return await _repository.TableNoTracking.Include(x => x.Cities).ThenInclude(x => x.Districts).Select(x =>
+            return await _repository.TableNoTracking.Include(x => x.Cities)
+                .ThenInclude(x => x.Districts).Select(x =>
                 new TreeList
                 {
                     Id = x.Id,
@@ -49,5 +50,13 @@ namespace Business.Concrete
                     }).ToList()
                 }).ToListAsync();
         }
+        
+        
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<int> CountAsync()
+        {
+            return await _repository.TableNoTracking.CountAsync();
+        }
     }
+
 }

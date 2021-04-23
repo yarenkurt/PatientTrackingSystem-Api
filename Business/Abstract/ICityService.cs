@@ -9,8 +9,11 @@ namespace Business.Abstract
     {
         Task<List<City>> GetAllAsync(int countryId);
 
-        Task<int> CountCities();
         Task<List<City>> SearchCity(string searchKey);
+
+        Task<int> CountAsync();
+        
+        Task<List<City>> GetAll();
 
     }
 }

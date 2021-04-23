@@ -21,5 +21,11 @@ namespace Api.Controllers
         {
             return Ok(await _departmentService.GetAllAsync(hospitalId));
         }
+        
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count([FromQuery, Required] int hospitalId)
+        {
+            return Ok(await _departmentService.CountAsync(hospitalId));
+        }
     }
 }
