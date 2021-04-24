@@ -36,5 +36,10 @@ namespace Business.Concrete
         {
             return await _repository.TableNoTracking.CountAsync();
         }
+
+        public async Task<List<District>> GetAllDistricts()
+        {
+            return await _repository.GetAllAsync();
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Business.Abstract
     {
         Task<List<District>> GetAllAsync(int cityId);
         Task<int> CountAsync();
+        Task<List<District>> GetAllDistricts();
     }
 }

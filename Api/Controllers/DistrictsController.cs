@@ -29,5 +29,11 @@ namespace Api.Controllers
         {
             return Ok(await _districtService.CountAsync());
         }
+        
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _districtService.GetAllDistricts());
+        }
     }
 }
