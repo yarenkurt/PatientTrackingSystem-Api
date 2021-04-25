@@ -27,5 +27,11 @@ namespace Api.Controllers
         {
             return Ok(await _departmentService.CountAsync(hospitalId));
         }
+        
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _departmentService.GetAllAsync());
+        }
     }
 }

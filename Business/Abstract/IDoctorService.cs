@@ -18,6 +18,8 @@ namespace Business.Abstract
         Task<List<GetDoctorDto>> GetAllByDegreeAsync(int degreeId);
 
         Task<int> CountAsync(int hospitalId);
+        Task<List<GetDoctorDto>> GetAllByHospitalAsync(int hospitalId);
+
 
     }
 }

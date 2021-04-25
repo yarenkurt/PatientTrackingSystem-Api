@@ -197,6 +197,21 @@ namespace Business.Concrete
                 .CountAsync();
         }
 
-       
+        public async Task<List<GetDoctorDto>> GetAllByHospitalAsync(int hospitalId)
+        {
+            return await _doctorRepo.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.Department.HospitalId == hospitalId)
+                .Select(x => new GetDoctorDto
+                {
+                    Email = x.Email,
+                    FirstName = x.Person.FirstName,
+                    LastName = x.Person.LastName,
+                    Gsm = x.Person.Gsm,
+                    DepartmentName = x.Department.Description,
+                    DegreeName = x.Degree.Description
+                })
+                .ToListAsync();
+        }
     }
 }

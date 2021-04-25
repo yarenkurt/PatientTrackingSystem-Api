@@ -33,5 +33,11 @@ namespace Api.Controllers
         {
             return Ok(await _diseaseService.CountAsync(hospitalId));
         }
+        
+        [HttpGet("ByHospital")]
+        public async Task<IActionResult> GetAllByHospital([FromQuery] int hospitalId)
+        {
+            return Ok(await _diseaseService.GetAllAsyncByHospital(hospitalId));
+        }
     }
 }

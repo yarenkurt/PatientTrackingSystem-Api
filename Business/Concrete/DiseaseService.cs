@@ -47,5 +47,13 @@ namespace Business.Concrete
                 .Where(x => x.Department.HospitalId == hospitalId)
                 .CountAsync();
         }
+
+        public async Task<List<Disease>> GetAllAsyncByHospital(int hospitalId)
+        {
+            return await _repository.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.Department.HospitalId == hospitalId)
+                .ToListAsync();
+        }
     }
 }

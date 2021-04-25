@@ -31,7 +31,12 @@ namespace Business.Concrete
         {
             return await _repository.GetAllAsync(d => d.HospitalId == hospitalId);
         }
-        
+
+        public async Task<List<Department>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
+        }
+
         [SecurityAspect(PersonType.Admin)]
         public async Task<int> CountAsync(int hospitalId)
         {
