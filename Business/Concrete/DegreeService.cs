@@ -10,6 +10,7 @@ using Core.Enums;
 using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {

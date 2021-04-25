@@ -27,7 +27,7 @@ namespace Business.Concrete
         }
         
     
-        public async Task<List<Department>> GetAllAsync(int hospitalId)
+        public async Task<List<Department>> GetAllByHospAsync(int hospitalId)
         {
             return await _repository.GetAllAsync(d => d.HospitalId == hospitalId);
         }
