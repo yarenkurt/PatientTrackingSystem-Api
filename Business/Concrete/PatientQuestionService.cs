@@ -6,7 +6,6 @@ using Business.Validations;
 using Core.Aspects.Security;
 using Core.Aspects.Validation;
 using Core.Enums;
-using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
 

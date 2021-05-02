@@ -44,12 +44,14 @@ namespace Core.Token
 
         public async Task<List<Claim>> GetUserClaims()
         {
-            return new List<Claim>
-            {
-                _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier),
-                _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name),
-                _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)
-            };
+            return await Task.Run(() =>
+                new List<Claim>
+                {
+                    _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier),
+                    _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name),
+                    _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)
+                }
+            );
         }
 
 
@@ -71,6 +73,4 @@ namespace Core.Token
             return jwt;
         }
     }
-
- 
 }

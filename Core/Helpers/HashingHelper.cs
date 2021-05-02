@@ -9,7 +9,7 @@ namespace Core.Helpers
     {
         public static void CreatePasswordHash(string password, out byte[] passwordSalt, out byte[] passwordHash)
         {
-            if (string.IsNullOrEmpty(password)) throw new Exception("Password cannot be be null");
+            if (string.IsNullOrEmpty(password)) throw new Exception("Password cannot be null");
 
             using var hmac = new HMACSHA512();
             passwordSalt = hmac.Key;

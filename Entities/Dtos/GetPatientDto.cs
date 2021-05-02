@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Entities.Concrete;
 
 namespace Entities.Dtos
 {

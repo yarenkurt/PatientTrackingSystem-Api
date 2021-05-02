@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Entities.Dtos;
+﻿using Entities.Dtos;
 using FluentValidation;
 
 namespace Business.Validations

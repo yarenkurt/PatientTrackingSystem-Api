@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Validations;
@@ -9,7 +8,6 @@ using Core.Helpers;
 using Core.Models;
 using Core.Results;
 using Core.Sms;
-using Core.Sms.Dtos;
 using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;

@@ -1,26 +1,11 @@
-using System;
-using System.Text;
-using System.Text.Json.Serialization;
 using Api.Extensions;
 using Api.Installers.Services;
-using Business.Abstract;
-using Business.Concrete;
-using Core.Token;
 using Core.Utilities.IoC;
-using DataAccess.Contexts.EF;
-using DataAccess.Repositories;
-using DataAccess.Repositories.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Api
 {

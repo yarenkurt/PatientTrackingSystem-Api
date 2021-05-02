@@ -1,7 +1,5 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
-using Core.Models;
-using Core.Sms;
 using Core.Token;
 using DataAccess.Repositories;
 using DataAccess.Repositories.EF;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Repositories;
@@ -7,7 +6,6 @@ using Business.Validations;
 using Core.Aspects.Security;
 using Core.Aspects.Validation;
 using Core.Enums;
-using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
 

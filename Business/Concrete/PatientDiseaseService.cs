@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Repositories;
@@ -8,10 +7,8 @@ using Core.Aspects.Security;
 using Core.Aspects.Validation;
 using Core.Enums;
 using Core.Results;
-using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {

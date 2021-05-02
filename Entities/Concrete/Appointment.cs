@@ -1,6 +1,5 @@
 ﻿using System;
 using Core.Signatures;
-using Newtonsoft.Json;
 
 namespace Entities.Concrete
 {
