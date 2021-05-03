@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Entities.Concrete;
+﻿using Entities.Concrete;
 using FluentValidation;
 
 namespace Business.Validations

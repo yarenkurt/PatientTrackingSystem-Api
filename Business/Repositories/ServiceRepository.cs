@@ -2,7 +2,6 @@
 using Core.Results;
 using Core.Signatures;
 using DataAccess.Repositories;
-using DataAccess.Repositories.EF;
 
 namespace Business.Repositories
 {

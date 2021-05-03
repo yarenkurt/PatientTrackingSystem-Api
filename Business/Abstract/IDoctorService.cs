@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Repositories;
 using Core.Results;
 using Entities.Concrete;
 using Entities.Dtos;

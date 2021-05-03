@@ -1,6 +1,4 @@
-﻿using Entities.Concrete;
-
-namespace Entities.Dtos
+﻿namespace Entities.Dtos
 {
     public class GetDoctorDto
     {

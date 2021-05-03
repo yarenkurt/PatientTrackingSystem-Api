@@ -21,7 +21,7 @@ namespace Core.Extensions
             if (valid) return result;
             if (throwExceptionIfFailed)
                 //throw new Exception($"{HelperMessages.CannotBeConvertedDateTime}");
-                throw new Exception("$\"{HelperMessages.CannotBeConvertedDateTime}\"");
+                throw new Exception($"Cannot Be Converted DateTime");
             return result;
         }
 
