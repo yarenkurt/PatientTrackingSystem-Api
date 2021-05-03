@@ -19,5 +19,11 @@ namespace Api.Controllers
         {
             return Ok(await _degreeService.GetAll());
         }
+        
+        [HttpGet("Count")]
+        public async Task<IActionResult> Count()
+        {
+            return Ok(await _degreeService.CountAsync());
+        }
     }
 }

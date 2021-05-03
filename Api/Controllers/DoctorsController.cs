@@ -56,5 +56,11 @@ namespace Api.Controllers
         {
             return Ok(await _doctorService.GetAllByHospitalAsync(hospitalId));
         }
+        
+        [HttpGet("PersonId")]
+        public async Task<IActionResult> GetByPerson([FromQuery, Required] int personId)
+        {
+            return Ok(await _doctorService.GetByPersonIdAsync(personId));
+        }
     }
 }

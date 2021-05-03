@@ -48,6 +48,7 @@ namespace Api.Controllers
         {
             return Ok(await _authService.ForgotPassword(gsm));
         }
+        
 
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout([FromBody, Required] int userId)

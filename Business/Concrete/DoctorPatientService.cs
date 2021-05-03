@@ -20,10 +20,15 @@ namespace Business.Concrete
     public class DoctorPatientService : ServiceRepository<DoctorPatient>,IDoctorPatientService
     {
         private readonly IRepository<DoctorPatient> _repository;
+        private readonly IUserService _userService;
+        private readonly IRepository<Doctor> _doctorRepo;
+
         
-        public DoctorPatientService(IRepository<DoctorPatient> repository) : base(repository)
+        public DoctorPatientService(IRepository<DoctorPatient> repository, IUserService userService, IRepository<Doctor> doctorRepo) : base(repository)
         {
             _repository = repository;
+            _userService = userService;
+            _doctorRepo = doctorRepo;
         }
 
         public async Task<int> CountPatientOfDoctor(int doctorId)
@@ -34,7 +39,11 @@ namespace Business.Concrete
         [SecurityAspect(PersonType.Doctor)]
         public async Task<List<GetPatientDto>> GetPatientListOfDoctor(int doctorId)
         {
-            return await _repository.TableNoTracking.Where(x => x.DoctorId == doctorId)
+            var doctor = await _doctorRepo.TableNoTracking.Where(x => x.PersonId == doctorId)
+                .FirstOrDefaultAsync();
+            
+            
+            return await _repository.TableNoTracking.Where(x => x.DoctorId == doctor.Id)
                 .Include(x => x.Patient)
                 .Select(x => new GetPatientDto
                 {

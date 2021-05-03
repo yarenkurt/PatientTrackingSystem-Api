@@ -25,12 +25,17 @@ namespace Business.Concrete
         private readonly IRepository<Patient> _repository;
         private readonly SmsHelper _smsHelper;
         private readonly IUserService _userService;
+        private readonly IRepository<DoctorPatient> _doctorPatientRepo;
+        private readonly IRepository<Doctor> _doctorRepo;
 
-        public PatientService(IRepository<Patient> repository,IUserService userService, SmsHelper smsHelper)
+
+        public PatientService(IRepository<Patient> repository,IUserService userService, SmsHelper smsHelper, IRepository<DoctorPatient> doctorPatientRepo, IRepository<Doctor> doctorRepo)
         {
             _repository = repository;
             _userService = userService;
             _smsHelper = smsHelper;
+            _doctorPatientRepo = doctorPatientRepo;
+            _doctorRepo = doctorRepo;
         }
 
 
@@ -95,12 +100,22 @@ namespace Business.Concrete
           
             };
 
+            var doctor = await _doctorRepo.TableNoTracking.Where(x => x.PersonId == _userService.PersonId)
+                .FirstOrDefaultAsync();
+
             await _repository.InsertAsync(patient);
+            await _doctorPatientRepo.InsertAsync(new DoctorPatient
+            {
+                DoctorId = doctor.Id,
+                PatientId = patient.Id
+            });
+            
             await _smsHelper.SendAsync(new List<string> {patient.Person.Gsm},
                 "Welcome to the YEDITEPE HOSPITAL \nYou are registered to patientTracker.net as Patient by "+_userService.FullName+" \nLogin to the system with your ID \nYour password is " + randomPass);
 
             
-            var result = await _repository.TableNoTracking.Where(x => x.Id == patient.Id)
+            var result = await _repository.TableNoTracking.Where(x => x.PersonId == patient.Person.Id)
+                .Include(x => x.Person)
                 .FirstOrDefaultAsync();
             
             return new SuccessDataResult<GetPatientDto>(new GetPatientDto

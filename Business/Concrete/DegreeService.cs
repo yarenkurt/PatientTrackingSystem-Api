@@ -30,5 +30,10 @@ namespace Business.Concrete
         {
             return await _repository.GetAllAsync();
         }
+
+        public async Task<int> CountAsync()
+        {
+            return await _repository.TableNoTracking.CountAsync();
+        }
     }
 }

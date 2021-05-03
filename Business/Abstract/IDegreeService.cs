@@ -8,5 +8,6 @@ namespace Business.Abstract
     public interface IDegreeService : IServiceRepository<Degree>
     {
         Task<List<Degree>> GetAll();
+        Task<int> CountAsync();
     }
 }

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [Authorize(Roles = "3")]
     public class CitiesController : ControllerRepository<ICityService,City>
     {
         private readonly ICityService _cityService;

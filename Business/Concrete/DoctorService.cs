@@ -22,7 +22,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Admin)]
+   
     public class DoctorService : IDoctorService
     {
         private readonly IRepository<Doctor> _doctorRepo;
@@ -38,7 +38,7 @@ namespace Business.Concrete
             _smsHelper = smsHelper;
         }
         
-
+        [SecurityAspect(PersonType.Admin)]
         public async Task<List<GetDoctorDto>> GetAllAsync()
         {
             return await _doctorRepo.TableNoTracking
@@ -56,7 +56,7 @@ namespace Business.Concrete
                 .ToListAsync();
         }
         
-
+        [SecurityAspect(PersonType.Admin)]
         public async Task<GetDoctorDto> GetAsync(int doctorId)
         {
             return await _doctorRepo.TableNoTracking.Where(x => x.Id == doctorId)
@@ -74,7 +74,7 @@ namespace Business.Concrete
                 .FirstOrDefaultAsync();
         }
 
-        
+        [SecurityAspect(PersonType.Admin)]
         [ValidationAspect(typeof(DoctorInsertValidator))]
         public async Task<DataResult<GetDoctorDto>> InsertAsync(InsertDoctorDto insertDoctorDto)
         {
@@ -108,14 +108,15 @@ namespace Business.Concrete
             var hospital =  _doctorRepo.TableNoTracking
                 .Include(x => x.Department)
                 .Where(x => x.PersonId == doctor.PersonId)
-                .Select(x => x.Department.Hospital.Description);
+                .Select(x => x.Department.Hospital.Description)
+                .FirstOrDefaultAsync();
                 
                 
             await _smsHelper.SendAsync(new List<string> {doctor.Person.Gsm},
                 "Welcome to the "+ hospital + " Hospital \n You are registered to patientTracker.net as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
 
 
-            var result = await _doctorRepo.TableNoTracking.Where(x => x.Id == doctor.Id)
+            var result = await _doctorRepo.TableNoTracking.Where(x => x.PersonId == doctor.PersonId)
                 .Include(x => x.Person)
                 .Include(x => x.Department)
                 .Include(x => x.Degree)
@@ -134,13 +135,14 @@ namespace Business.Concrete
             return res;
         }
         
-        
+        [SecurityAspect(PersonType.Admin)]
         public async Task<Result> UpdateAsync(Doctor entity)
         {
             return await _doctorRepo.UpdateAsync(entity);
         }
 
         
+        [SecurityAspect(PersonType.Admin)]
         public async Task<Result> DeleteAsync(int id)
         {
             var doctor = await _doctorRepo.GetAsync(id);
@@ -153,6 +155,7 @@ namespace Business.Concrete
         }
         
         
+        [SecurityAspect(PersonType.Admin)]
         public async Task<List<GetDoctorDto>> GetAllByDeptAsync(int deptId)
         {
             return await _doctorRepo.TableNoTracking.Where(x => x.DepartmentId == deptId)
@@ -170,6 +173,8 @@ namespace Business.Concrete
                 .ToListAsync();
         }
 
+        
+        [SecurityAspect(PersonType.Admin)]
         public async Task<List<GetDoctorDto>> GetAllByDegreeAsync(int degreeId)
         {
             return await _doctorRepo.TableNoTracking.Where(x => x.DegreeId == degreeId)
@@ -197,6 +202,8 @@ namespace Business.Concrete
                 .CountAsync();
         }
 
+        
+        [SecurityAspect(PersonType.Admin)]
         public async Task<List<GetDoctorDto>> GetAllByHospitalAsync(int hospitalId)
         {
             return await _doctorRepo.TableNoTracking
@@ -212,6 +219,17 @@ namespace Business.Concrete
                     DegreeName = x.Degree.Description
                 })
                 .ToListAsync();
+        }
+
+        
+        [SecurityAspect(PersonType.Doctor)]
+        public async Task<Doctor> GetByPersonIdAsync(int personId)
+        {
+            return await _doctorRepo.TableNoTracking
+                                    .Include(x => x.Degree)
+                                    .Include((x => x.Department))
+                                    .Where(x => x.PersonId == personId)
+                                    .FirstOrDefaultAsync();
         }
     }
 }
