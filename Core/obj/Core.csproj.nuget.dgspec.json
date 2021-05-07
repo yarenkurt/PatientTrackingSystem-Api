@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\Core.csproj": {}
+    "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\Core.csproj": {
+    "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\kubra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\obj\\",
+        "outputPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kubra\\AppData\\Roaming\\NuGet\\NuGet.Config",

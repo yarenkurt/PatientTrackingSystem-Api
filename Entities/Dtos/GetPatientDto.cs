@@ -9,7 +9,8 @@ namespace Entities.Dtos
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gsm { get; set; }
-        
+        public decimal HealthScore { get; set; }
+
         public  List<string> Diseases{ get; set; }
         
     }

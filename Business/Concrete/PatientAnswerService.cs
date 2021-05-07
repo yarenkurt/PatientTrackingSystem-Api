@@ -27,10 +27,10 @@ namespace Business.Concrete
         }
 
         
-        public async Task<decimal> GetTotalScoreOfPatient(int patientId)
+        public decimal GetTotalScoreOfPatient(int patientId)
         {
-            return await _repository.TableNoTracking.Where(x => x.PatientId == patientId)
-                .SumAsync(x => x.Score);
+            return _repository.TableNoTracking.Where(x => x.PatientId == patientId)
+                .Sum(x => x.Score);
         }
     }
 }

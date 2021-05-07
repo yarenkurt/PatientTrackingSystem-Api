@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Core.Signatures;
 
 namespace Entities.Concrete
@@ -12,8 +13,9 @@ namespace Entities.Concrete
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         
+        [JsonIgnore]
         public Doctor Doctor { get; set; }
-        
+        [JsonIgnore]
         public Patient Patient { get; set; }
     }
 }

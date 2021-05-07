@@ -9127,11 +9127,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\UnitTest\\UnitTest.csproj",
+      "projectUniqueName": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\UnitTest\\UnitTest.csproj",
       "projectName": "UnitTest",
-      "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\UnitTest\\UnitTest.csproj",
+      "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\UnitTest\\UnitTest.csproj",
       "packagesPath": "C:\\Users\\kubra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\UnitTest\\obj\\",
+      "outputPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\UnitTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kubra\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9148,20 +9148,20 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Api\\Api.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Api\\Api.csproj"
+            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Api\\Api.csproj": {
+              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Api\\Api.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Business\\Business.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Business\\Business.csproj"
+            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Business\\Business.csproj": {
+              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Business\\Business.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Core\\Core.csproj"
+            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\DataAccess\\DataAccess.csproj"
+            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\DataAccess\\DataAccess.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Entities\\Entities.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\Entities\\Entities.csproj"
+            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Entities\\Entities.csproj": {
+              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Entities\\Entities.csproj"
             }
           }
         }

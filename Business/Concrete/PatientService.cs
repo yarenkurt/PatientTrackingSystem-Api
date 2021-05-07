@@ -25,15 +25,17 @@ namespace Business.Concrete
         private readonly IUserService _userService;
         private readonly IRepository<DoctorPatient> _doctorPatientRepo;
         private readonly IRepository<Doctor> _doctorRepo;
+        private readonly IPatientAnswerService _patientAnswerService;
 
 
-        public PatientService(IRepository<Patient> repository,IUserService userService, SmsHelper smsHelper, IRepository<DoctorPatient> doctorPatientRepo, IRepository<Doctor> doctorRepo)
+        public PatientService(IRepository<Patient> repository,IUserService userService, SmsHelper smsHelper, IRepository<DoctorPatient> doctorPatientRepo, IRepository<Doctor> doctorRepo, IPatientAnswerService patientAnswerService)
         {
             _repository = repository;
             _userService = userService;
             _smsHelper = smsHelper;
             _doctorPatientRepo = doctorPatientRepo;
             _doctorRepo = doctorRepo;
+            _patientAnswerService = patientAnswerService;
         }
 
 
@@ -47,6 +49,7 @@ namespace Business.Concrete
                 LastName = p.Person.LastName,
                 Email = p.Email,
                 Gsm = p.Person.Gsm,
+                HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(p.Id),
                 Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList()
 
             }).ToListAsync();
@@ -63,6 +66,7 @@ namespace Business.Concrete
                     LastName = p.Person.LastName,
                     Email = p.Email,
                     Gsm = p.Person.Gsm,
+                    HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(p.Id),
                     Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList()
 
                 }).FirstOrDefaultAsync();
@@ -123,6 +127,7 @@ namespace Business.Concrete
                 LastName = result.Person.LastName,
                 Email = result.Email,
                 Gsm = result.Person.Gsm,
+                HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(result.Id),
                 Diseases = new List<string>()
             });
             

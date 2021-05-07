@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/Users/abdikurt/.dotnet/store/|arch|/|tfm|",
-      "/Users/abdikurt/.nuget/packages"
+      "C:\\Users\\kubra\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\kubra\\.nuget\\packages"
     ]
   }
 }

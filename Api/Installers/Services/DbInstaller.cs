@@ -10,7 +10,7 @@ namespace Api.Installers.Services
         public static void InstallDatabase(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddDbContext<PatientTrackingContext>(x =>
-                x.UseSqlServer(configuration.GetConnectionString("Api")), ServiceLifetime.Scoped);
+                x.UseSqlServer(configuration.GetConnectionString("Api")), ServiceLifetime.Transient);
             
         }
     }

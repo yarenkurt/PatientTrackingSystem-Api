@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LkG468/XUJ05Tp15E+NsRgj4Ay76eTlVLN/9XzANN5JO1SvEIB2e8Ai5bqGwa2Ofkyodgnr1AmWXgfSgjNwwxw==",
+  "dgSpecHash": "6NtuOiGJkZO7RErFmg+S8rVpiJvY7Q21UmUECcfrK58AUodpdDqdpe2JWGei2B666kGTkQbojiRjShePA136nQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTracker\\DataAccess\\DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kubra\\.nuget\\packages\\autofac\\6.0.0\\autofac.6.0.0.nupkg.sha512",
     "C:\\Users\\kubra\\.nuget\\packages\\autofac.extensions.dependencyinjection\\7.1.0\\autofac.extensions.dependencyinjection.7.1.0.nupkg.sha512",

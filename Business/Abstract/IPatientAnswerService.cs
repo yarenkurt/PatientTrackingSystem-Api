@@ -8,6 +8,6 @@ namespace Business.Abstract
     public interface IPatientAnswerService : IServiceRepository<PatientAnswer>
     {
         Task<List<PatientAnswer>> GetAllAnswers(int patientId);
-        Task<decimal> GetTotalScoreOfPatient(int patientId);
+        decimal GetTotalScoreOfPatient(int patientId);
     }
 }
