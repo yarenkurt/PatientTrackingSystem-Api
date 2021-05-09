@@ -44,13 +44,16 @@ namespace Business.Concrete
             return await _repository.TableNoTracking
                 .Select(p => new GetPatientDto
             {
+                Id = p.Id,
                 IdentityNumber = p.IdentityNumber,
                 FirstName = p.Person.FirstName,
                 LastName = p.Person.LastName,
                 Email = p.Email,
                 Gsm = p.Person.Gsm,
                 HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(p.Id),
-                Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList()
+                Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList(),
+                Danger =  _patientAnswerService.CountRiskyAnswers(p.Id),
+                DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault()
 
             }).ToListAsync();
         }
@@ -58,16 +61,25 @@ namespace Business.Concrete
         
         public async Task<GetPatientDto> GetAsync(int patientId)
         {
+            var doctor = await _doctorRepo.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.PersonId == _userService.PersonId)
+                .FirstOrDefaultAsync();
+            
             return await _repository.TableNoTracking.Where(p => p.Id == patientId)
                 .Select(p => new GetPatientDto
                 {
+                    Id = p.Id,
                     IdentityNumber = p.IdentityNumber,
                     FirstName = p.Person.FirstName,
                     LastName = p.Person.LastName,
                     Email = p.Email,
                     Gsm = p.Person.Gsm,
                     HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(p.Id),
-                    Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList()
+                    Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList(),
+                    Danger =  _patientAnswerService.CountRiskyAnswers(p.Id),
+                    DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault(),
+                    HospitalId = doctor.Department.HospitalId
 
                 }).FirstOrDefaultAsync();
         }

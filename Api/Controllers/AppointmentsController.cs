@@ -28,11 +28,5 @@ namespace Api.Controllers
             return Ok(await _appointmentService.GetAllByDoctor(doctorId));
         }
 
-        [HttpGet("PatientDoctors")]
-        public async Task<IActionResult> GetByPatientAndDoctor([FromQuery, Required] int patientId,
-            [FromQuery, Required] int doctorId)
-        {
-            return Ok(await _appointmentService.GetAllByPatientAndDoctor(patientId, doctorId));
-        }
     }
 }

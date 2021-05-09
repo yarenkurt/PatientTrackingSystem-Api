@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Admin)]
+    [SecurityAspect(PersonType.Null)]
     [ValidationAspect(typeof(DiseaseValidator))]
     public class DiseaseService : ServiceRepository<Disease>, IDiseaseService
     {

@@ -39,5 +39,11 @@ namespace Api.Controllers
         {
             return Ok(await _patientDiseaseService.AddDiseaseToPatient(newDisease));
         }
+        
+        [HttpPost("RemoveFromPatient")]
+        public async Task<IActionResult> DeleteDisease([FromBody] PatientDisease patDisease)
+        {
+            return Ok(await _patientDiseaseService.DeleteDiseaseFromPatient(patDisease));
+        }
     }
 }

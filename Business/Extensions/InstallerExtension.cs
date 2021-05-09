@@ -11,28 +11,28 @@ namespace Business.Extensions
     {
         public static void InstallService(this IServiceCollection services)
         {
-            services.AddSingleton(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddSingleton<SmsHelper>();
-            services.AddSingleton<ICountryService, CountryService>();
-            services.AddSingleton<ICityService, CityService>();
-            services.AddSingleton<IDistrictService, DistrictService>();
-            services.AddSingleton<IHospitalService, HospitalService>();
-            services.AddSingleton<IDepartmentService, DepartmentService>();
-            services.AddSingleton<IAdminService, AdminService>();
-            services.AddSingleton<IAdviceService, AdviceService>();
-            services.AddSingleton<IAppointmentService, AppointmentService>();
-            services.AddSingleton<IDoctorService, DoctorService>();
-            services.AddSingleton<ITokenService, TokenService>();
-            services.AddSingleton<IAuthenticationService, AuthenticationService>();
-            services.AddSingleton<IDegreeService, DegreeService>();
-            services.AddSingleton<IDiseaseService, DiseaseService>();
-            services.AddSingleton<IPatientService, PatientService>();
-            services.AddSingleton<IPatientDiseaseService, PatientDiseaseService>();
-            services.AddSingleton<IDoctorPatientService, DoctorPatientService>();
-            services.AddSingleton<IPatientRelativeService, PatientRelativeService>();
-            services.AddSingleton<IPersonLoginHistoryService, PersonLoginHistoryService>();
-            services.AddSingleton<IQuestionPoolService,QuestionPoolService>();
-            services.AddSingleton<IUserService,UserService>();
+            services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddTransient<SmsHelper>();
+            services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<IDistrictService, DistrictService>();
+            services.AddTransient<IHospitalService, HospitalService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
+            services.AddTransient<IAdminService, AdminService>();
+            services.AddTransient<IAdviceService, AdviceService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddTransient<IDoctorService, DoctorService>();
+            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IDegreeService, DegreeService>();
+            services.AddTransient<IDiseaseService, DiseaseService>();
+            services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IPatientDiseaseService, PatientDiseaseService>();
+            services.AddTransient<IDoctorPatientService, DoctorPatientService>();
+            services.AddTransient<IPatientRelativeService, PatientRelativeService>();
+            services.AddTransient<IPersonLoginHistoryService, PersonLoginHistoryService>();
+            services.AddTransient<IQuestionPoolService,QuestionPoolService>();
+            services.AddTransient<IUserService,UserService>();
 
         }
     }

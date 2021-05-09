@@ -9,7 +9,8 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public int QuestionPoolId { get; set; }
         public int PatientId { get; set; }
-        public int Day { get; set; }
+        
+        [JsonIgnore]
         public DateTime CreatedAt { get; set; }
 
         [JsonIgnore]

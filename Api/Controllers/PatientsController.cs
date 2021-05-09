@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    [Authorize(Roles = "3,2")]  //Only Doctors and Admins can access to PatientsController
     [ApiController]
     [Route("api/[controller]")]
     public class PatientsController : ControllerBase
@@ -26,13 +25,12 @@ namespace Api.Controllers
             return Ok(await _patientService.GetAllAsync());
         }
         
-        [HttpGet("ById")]
-        public async Task<IActionResult> GetById([FromQuery, Required] int patientId)
+        [HttpGet("ById/{patientId}")]
+        public async Task<IActionResult> GetById([FromRoute, Required] int patientId)
         {
             return Ok(await _patientService.GetAsync(patientId));
         }
 
-        [Authorize(Roles = "2")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] InsertPatientDto dto)
         {

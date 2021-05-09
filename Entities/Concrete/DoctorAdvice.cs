@@ -12,9 +12,7 @@ namespace Entities.Concrete
         [JsonIgnore]
         public int DepartmentId { get; set; }
         public string CreatedUserName { get; set; } //Claimsten alınacak
-        public int PatientId { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime? ReadingTime { get; set; }
 
         [JsonIgnore]
         public Department Department { get; set; }

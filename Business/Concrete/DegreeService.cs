@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Admin)]
+    [SecurityAspect(PersonType.Null)]
     [ValidationAspect(typeof(DegreeValidator))]
     public class DegreeService : ServiceRepository<Degree>, IDegreeService
     {

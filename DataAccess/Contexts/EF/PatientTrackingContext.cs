@@ -33,6 +33,7 @@ namespace DataAccess.Contexts.EF
         public DbSet<PatientAnswer> PatientAnswers { get; set; }
         public DbSet<PatientDisease> PatientDiseases { get; set; }
         public DbSet<PatientRelative> PatientRelatives { get; set; }
+        public DbSet<AnswerPool> AnswerPools { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

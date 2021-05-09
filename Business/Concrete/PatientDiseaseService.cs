@@ -48,5 +48,11 @@ namespace Business.Concrete
         {
             return await _repository.InsertAsync(newDisease);
         }
+        
+        [SecurityAspect(PersonType.Doctor)]
+        public async Task<Result> DeleteDiseaseFromPatient(PatientDisease patDisease)
+        {
+            return await _repository.DeleteAsync(patDisease);
+        }
     }
 }

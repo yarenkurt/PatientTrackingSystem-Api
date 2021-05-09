@@ -16,12 +16,7 @@ namespace Api.Controllers
             _departmentService = departmentService;
         }
 
-        [HttpGet("All")]
-        public async Task<IActionResult> GetAll([FromQuery, Required] int hospitalId)
-        {
-            return Ok(await _departmentService.GetAllByHospAsync(hospitalId));
-        }
-        
+  
         [HttpGet("Count")]
         public async Task<IActionResult> Count([FromQuery, Required] int hospitalId)
         {
@@ -29,9 +24,9 @@ namespace Api.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery, Required] int hospitalId)
         {
-            return Ok(await _departmentService.GetAllAsync());
+            return Ok(await _departmentService.GetAllAsync(hospitalId));
         }
     }
 }

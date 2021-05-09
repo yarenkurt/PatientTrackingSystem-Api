@@ -19,7 +19,9 @@ namespace Api.Controllers
         [HttpGet("Answers")]
         public async Task<IActionResult> GetAll([FromQuery, Required] int questionId)
         {
-            return Ok(await _answerService.GetAnswerOfQuestion(questionId));
+            return Ok(await _answerService.GetAnswersOfQuestion(questionId));
         }
+        
+        
     }
 }

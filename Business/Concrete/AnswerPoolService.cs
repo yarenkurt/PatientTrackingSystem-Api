@@ -24,7 +24,7 @@ namespace Business.Concrete
         
   
         [SecurityAspect(PersonType.Doctor)]
-        public async Task<List<AnswerPool>> GetAnswerOfQuestion(int questionId)
+        public async Task<List<AnswerPool>> GetAnswersOfQuestion(int questionId)
         {
             return await _repository.GetAllAsync(x => x.QuestionPoolId == questionId);
         }

@@ -12,6 +12,9 @@ namespace Entities.Concrete
         public int QuestionPoolId { get; set; }
         public decimal Score { get; set; }
         public DateTime CreatedAt { get; set; }
+        
+        [JsonIgnore]
+        public bool Result { get; set; }
 
         [JsonIgnore]
         public Patient Patient { get; set; }

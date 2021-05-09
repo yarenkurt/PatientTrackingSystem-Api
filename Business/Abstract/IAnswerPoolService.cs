@@ -7,6 +7,6 @@ namespace Business.Abstract
 {
     public interface IAnswerPoolService : IServiceRepository<AnswerPool>
     {
-        Task<List<AnswerPool>> GetAnswerOfQuestion(int questionId);
+        Task<List<AnswerPool>> GetAnswersOfQuestion(int questionId);
     }
 }

@@ -13,5 +13,6 @@ namespace Business.Abstract
         Task<List<PatientDisease>> GetAll();
         
         Task<Result> AddDiseaseToPatient(PatientDisease newDisease);
+        Task<Result> DeleteDiseaseFromPatient(PatientDisease patDisease);
     }
 }

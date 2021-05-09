@@ -17,7 +17,7 @@ namespace Api.Controllers
         }
 
 
-        [HttpGet("All")]
+        [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery, Required] int deptId)
         {
             return Ok(await _questionPoolService.GetAllByDept(deptId));

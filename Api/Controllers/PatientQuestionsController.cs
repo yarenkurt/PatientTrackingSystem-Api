@@ -21,5 +21,7 @@ namespace Api.Controllers
         {
             return Ok(await _patientQuestionService.GetAllQuestions(patientId));
         }
+
+        
     }
 }

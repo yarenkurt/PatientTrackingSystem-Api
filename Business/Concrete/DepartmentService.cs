@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Admin)]
+    [SecurityAspect(PersonType.Null)]
     [ValidationAspect(typeof(DepartmentValidator))]
     public class DepartmentService : ServiceRepository<Department>, IDepartmentService
     {
@@ -25,15 +25,11 @@ namespace Business.Concrete
         }
         
     
-        public async Task<List<Department>> GetAllByHospAsync(int hospitalId)
+        public async Task<List<Department>> GetAllAsync(int hospitalId)
         {
             return await _repository.GetAllAsync(d => d.HospitalId == hospitalId);
         }
-
-        public async Task<List<Department>> GetAllAsync()
-        {
-            return await _repository.GetAllAsync();
-        }
+        
 
         [SecurityAspect(PersonType.Admin)]
         public async Task<int> CountAsync(int hospitalId)
