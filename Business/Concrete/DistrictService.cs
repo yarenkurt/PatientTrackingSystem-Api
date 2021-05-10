@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Repositories;
@@ -8,6 +9,7 @@ using Core.Aspects.Validation;
 using Core.Enums;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
@@ -24,9 +26,16 @@ namespace Business.Concrete
         }
         
    
-        public async Task<List<District>> GetAllAsync(int cityId)
+        public async Task<List<GetDistrictDto>> GetAllAsync(int cityId)
         {
-            return await _repository.GetAllAsync(d => d.CityId == cityId);
+            return await _repository.TableNoTracking.Where(d => d.CityId == cityId)
+                .Include(x => x.City)
+                .Select(x => new GetDistrictDto
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    CityName = x.City.Description
+                }).ToListAsync();
         }
         
         [SecurityAspect(PersonType.Admin)]
@@ -35,9 +44,16 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.CountAsync();
         }
 
-        public async Task<List<District>> GetAllDistricts()
+        public async Task<List<GetDistrictDto>> GetAllDistricts()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.TableNoTracking
+                .Include(x => x.City)
+                .Select(x => new GetDistrictDto
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    CityName = x.City.Description
+                }).ToListAsync();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
+        
+        [JsonIgnore]
         public DateTime CreatedAt { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }

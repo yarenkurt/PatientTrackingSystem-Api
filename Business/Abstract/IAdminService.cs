@@ -12,7 +12,7 @@ namespace Business.Abstract
         Task<List<GetAdminDto>> GetAllAsync();
         Task<Admin> GetAsync(int id);
         Task<DataResult<GetAdminDto>> InsertAsync(InsertAdminDto insertAdminDto);
-        Task<Result> UpdateAsync(Admin entity);
+        Task<Result> UpdateAsync(int adminId,InsertAdminDto entity);
         Task<Result> DeleteAsync(int id);
         
     }

@@ -146,9 +146,17 @@ namespace Business.Concrete
         }
 
         
-        public async Task<Result> UpdateAsync(Patient entity)
+        public async Task<Result> UpdateAsync(int patientId, InsertPatientDto insertPatientDto)
         {
-            return await _repository.UpdateAsync(entity);
+            var patient = await _repository.GetAsync(patientId);
+
+            patient.Person.FirstName = insertPatientDto.FirstName;
+            patient.Person.LastName = insertPatientDto.LastName;
+            patient.Person.Gsm = insertPatientDto.Gsm;
+            patient.Email = insertPatientDto.Email;
+            patient.IdentityNumber = insertPatientDto.IdentityNumber;
+            
+            return await _repository.UpdateAsync(patient);
         }
 
         

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Repositories;
@@ -8,6 +9,7 @@ using Core.Aspects.Validation;
 using Core.Enums;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
@@ -24,9 +26,16 @@ namespace Business.Concrete
         }
         
 
-        public async Task<List<City>> GetAllAsync(int countryId)
+        public async Task<List<GetCityDto>> GetAllAsync(int countryId)
         {
-            return await _repository.GetAllAsync(c => c.CountryId == countryId);
+            return await _repository.TableNoTracking.Where(x => x.CountryId == countryId)
+                .Include(x => x.Country)
+                .Select(x => new GetCityDto
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    CountryName = x.Country.Description
+                }).ToListAsync();
         }
         
         
@@ -46,9 +55,16 @@ namespace Business.Concrete
         }
 
         [SecurityAspect(PersonType.Admin)]
-        public async Task<List<City>> GetAll()
+        public async Task<List<GetCityDto>> GetAll()
         {
-            return await _repository.GetAllAsync();
+            return await  _repository.TableNoTracking
+                .Include(x => x.Country)
+                .Select(x => new GetCityDto
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    CountryName = x.Country.Description
+                }).ToListAsync();
         }
     }
 }

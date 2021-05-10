@@ -30,7 +30,7 @@ namespace UnitTest.Business.Mocks
 
         public MockPatientService Update(Result result, Patient entityResult)
         {
-            Setup(x => x.UpdateAsync(It.IsAny<Patient>())).ReturnsAsync(result);
+           // Setup(x => x.UpdateAsync(It.IsAny<Patient>())).ReturnsAsync(result);
             return this;
         }
 

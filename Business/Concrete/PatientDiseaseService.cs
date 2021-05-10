@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Repositories;
@@ -9,6 +10,7 @@ using Core.Enums;
 using Core.Results;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
@@ -50,9 +52,12 @@ namespace Business.Concrete
         }
         
         [SecurityAspect(PersonType.Doctor)]
-        public async Task<Result> DeleteDiseaseFromPatient(PatientDisease patDisease)
+        public async Task<int> GetId(PatientDisease patDisease)
         {
-            return await _repository.DeleteAsync(patDisease);
+            PatientDisease disease = await _repository.TableNoTracking
+                .Where(x => x.PatientId == patDisease.PatientId && x.DiseaseId == patDisease.DiseaseId)
+                .FirstOrDefaultAsync();
+            return disease.Id;
         }
     }
 }

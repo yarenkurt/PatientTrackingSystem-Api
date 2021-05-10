@@ -41,6 +41,7 @@ namespace Business.Concrete
                 .Include(x => x.Degree)
                 .Select(x => new GetDoctorDto
                 {
+                    Id = x.Id,
                     Email = x.Email,
                     FirstName = x.Person.FirstName,
                     LastName = x.Person.LastName,
@@ -59,6 +60,7 @@ namespace Business.Concrete
                 .Include(x => x.Degree)
                 .Select(x => new GetDoctorDto
                 {
+                    Id = x.Id,
                     Email = x.Email,
                     FirstName = x.Person.FirstName,
                     LastName = x.Person.LastName,
@@ -119,6 +121,7 @@ namespace Business.Concrete
             
             var res = new SuccessDataResult<GetDoctorDto>(new GetDoctorDto
             {
+                Id = result.Id,
                 Email = result.Email,
                 FirstName = result.Person.FirstName,
                 LastName = result.Person.LastName,
@@ -131,9 +134,18 @@ namespace Business.Concrete
         }
         
         [SecurityAspect(PersonType.Admin)]
-        public async Task<Result> UpdateAsync(Doctor entity)
+        public async Task<Result> UpdateAsync( int doctorId,  InsertDoctorDto insertDoctorDto)
         {
-            return await _doctorRepo.UpdateAsync(entity);
+            var doctor = await _doctorRepo.GetAsync(doctorId);
+
+            doctor.Person.FirstName = insertDoctorDto.FirstName;
+            doctor.Person.LastName = insertDoctorDto.LastName;
+            doctor.Person.Gsm = insertDoctorDto.Gsm;
+            doctor.Email = insertDoctorDto.Email;
+            doctor.DegreeId = insertDoctorDto.DegreeId;
+            doctor.DepartmentId = insertDoctorDto.DepartmentId;
+            
+            return await _doctorRepo.UpdateAsync(doctor);
         }
 
         
@@ -206,6 +218,7 @@ namespace Business.Concrete
                 .Where(x => x.Department.HospitalId == hospitalId)
                 .Select(x => new GetDoctorDto
                 {
+                    Id = x.Id,
                     Email = x.Email,
                     FirstName = x.Person.FirstName,
                     LastName = x.Person.LastName,

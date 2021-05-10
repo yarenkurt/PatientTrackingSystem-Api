@@ -2,13 +2,14 @@
 using System.Threading.Tasks;
 using Business.Repositories;
 using Entities.Concrete;
+using Entities.Dtos;
 
 namespace Business.Abstract
 {
     public interface IDistrictService : IServiceRepository<District>
     {
-        Task<List<District>> GetAllAsync(int cityId);
+        Task<List<GetDistrictDto>> GetAllAsync(int cityId);
         Task<int> CountAsync();
-        Task<List<District>> GetAllDistricts();
+        Task<List<GetDistrictDto>> GetAllDistricts();
     }
 }

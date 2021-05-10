@@ -22,6 +22,10 @@ namespace Api.Controllers
             return Ok(await _patientQuestionService.GetAllQuestions(patientId));
         }
 
-        
+        [HttpPost("GetId")]
+        public async Task<IActionResult> GetId([FromBody] PatientQuestion patQuestion)
+        {
+            return Ok(await _patientQuestionService.GetId(patQuestion));
+        }
     }
 }

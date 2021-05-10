@@ -58,5 +58,18 @@ namespace Api.Controllers
         {
             return Ok(await _doctorService.GetByPersonIdAsync(personId));
         }
+        
+        
+        [HttpPut]
+        public async Task<IActionResult> Update([FromQuery] int doctorId,[FromBody] InsertDoctorDto doctor)
+        {
+            return Ok(await _doctorService.UpdateAsync(doctorId,doctor));
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            return Ok(await _doctorService.DeleteAsync(id));
+        }
     }
 }

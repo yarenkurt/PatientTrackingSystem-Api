@@ -100,15 +100,25 @@ namespace Business.Concrete
         {
             return await _repository.GetAsync(id);
         }
-
-        public Task<Result> UpdateAsync(Admin entity)
+        
+        
+        public async Task<Result> UpdateAsync(int adminId,InsertAdminDto insertAdminDto)
         {
-            throw new System.NotImplementedException();
+            var admin = await _repository.GetAsync(adminId);
+
+            admin.Person.FirstName = insertAdminDto.FirstName;
+            admin.Person.LastName = insertAdminDto.LastName;
+            admin.Person.Gsm = insertAdminDto.Gsm;
+            admin.Email = insertAdminDto.Email;
+
+            return await _repository.UpdateAsync(admin);
         }
 
-        public Task<Result> DeleteAsync(int id)
+        public async Task<Result> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var entity = await _repository.GetAsync(id);
+            if (entity == null) return new ErrorResult("Data not found");
+            return await _repository.DeleteAsync(entity);
         }
     }
 }
