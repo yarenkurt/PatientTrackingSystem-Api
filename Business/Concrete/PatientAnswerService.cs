@@ -18,11 +18,13 @@ namespace Business.Concrete
     {
         private readonly IRepository<PatientAnswer> _repository;
         private readonly IRepository<QuestionPool> _questionRepo;
+        private readonly IRepository<AnswerPool> _answerRepo;
         
-        public PatientAnswerService(IRepository<PatientAnswer> repository, IRepository<QuestionPool> questionRepo) : base(repository)
+        public PatientAnswerService(IRepository<PatientAnswer> repository, IRepository<QuestionPool> questionRepo, IRepository<AnswerPool> answerRepo) : base(repository)
         {
             _repository = repository;
             _questionRepo = questionRepo;
+            _answerRepo = answerRepo;
         }
 
         public async Task<List<GetAnswerDto>> GetAllAnswers(int patientId)
@@ -34,6 +36,7 @@ namespace Business.Concrete
                     QuestionDesc = x.QuestionPool.Description,
                     UpperLimit = x.QuestionPool.UpperLimit,
                     LowerLimit = x.QuestionPool.LowerLimit,
+                    AnswerDesc = x.AnswerDescription,
                     PatientScore = x.Score,
                     Result = x.Result
                 })
