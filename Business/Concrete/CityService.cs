@@ -66,5 +66,6 @@ namespace Business.Concrete
                     CountryName = x.Country.Description
                 }).ToListAsync();
         }
+
     }
 }

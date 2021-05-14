@@ -28,7 +28,7 @@ namespace Api.Controllers
         {
             return Ok(await _cityService.GetAll());
         }
-        
+
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] string searchKey)
         {

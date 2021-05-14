@@ -1,4 +1,5 @@
 ﻿using Core.Signatures;
+using Newtonsoft.Json;
 
 namespace Entities.Concrete
 {
@@ -11,8 +12,11 @@ namespace Entities.Concrete
         public string Email { get; set; }
         public bool IsBlocked { get; set; }
 
+        [JsonIgnore]
         public Department Department { get; set; }
+        [JsonIgnore]
         public Person Person { get; set; }
+        [JsonIgnore]
         public Degree Degree { get; set; }
     }
 }

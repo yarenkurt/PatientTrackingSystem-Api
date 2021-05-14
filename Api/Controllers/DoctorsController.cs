@@ -23,6 +23,12 @@ namespace Api.Controllers
             return Ok(await _doctorService.GetAllAsync());
         }
         
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            return Ok(await _doctorService.GetAsync(id));
+        }
+        
         [HttpGet("ByDepartment")]
         public async Task<IActionResult> GetAllByDept([FromQuery, Required] int deptId)
         {
@@ -61,9 +67,9 @@ namespace Api.Controllers
         
         
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] int doctorId,[FromBody] InsertDoctorDto doctor)
+        public async Task<IActionResult> Update([FromQuery] int id,[FromBody]  InsertDoctorDto doctorDto)
         {
-            return Ok(await _doctorService.UpdateAsync(doctorId,doctor));
+            return Ok(await _doctorService.UpdateAsync(id,doctorDto));
         }
         
         [HttpDelete("{id}")]

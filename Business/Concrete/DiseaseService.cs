@@ -9,6 +9,7 @@ using Core.Aspects.Validation;
 using Core.Enums;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
@@ -24,9 +25,16 @@ namespace Business.Concrete
             _repository = repository;
         }
         
-        public async Task<List<Disease>> GetAllAsync()
+        public async Task<List<GetDiseaseDto>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.TableNoTracking
+                .Include(x => x.Department)
+                .Select(x => new GetDiseaseDto
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    DepartmentName = x.Department.Description
+                }).ToListAsync();
         }
 
         [SecurityAspect(PersonType.Doctor)]
@@ -46,12 +54,18 @@ namespace Business.Concrete
                 .CountAsync();
         }
 
-        public async Task<List<Disease>> GetAllAsyncByHospital(int hospitalId)
+        public async Task<List<GetDiseaseDto>> GetAllAsyncByHospital(int hospitalId)
         {
             return await _repository.TableNoTracking
                 .Include(x => x.Department)
                 .Where(x => x.Department.HospitalId == hospitalId)
-                .ToListAsync();
+
+                .Select(x => new GetDiseaseDto
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    DepartmentName = x.Department.Description
+                }).ToListAsync();
         }
     }
 }

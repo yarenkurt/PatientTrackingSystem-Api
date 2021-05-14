@@ -9,9 +9,9 @@ namespace Business.Abstract
     public interface IDoctorService 
     {
         Task<List<GetDoctorDto>> GetAllAsync();
-        Task<GetDoctorDto> GetAsync(int id);
+        Task<UpdateDoctorDto> GetAsync(int id);
         Task<DataResult<GetDoctorDto>> InsertAsync(InsertDoctorDto insertAdminDto);
-        Task<Result> UpdateAsync( int doctorId,InsertDoctorDto entity);
+        Task<Result> UpdateAsync( int doctorId,  InsertDoctorDto doctorDto);
         Task<Result> DeleteAsync(int id);
         Task<List<GetDoctorDto>> GetAllByDeptAsync(int deptId);
         Task<List<GetDoctorDto>> GetAllByDegreeAsync(int degreeId);

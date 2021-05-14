@@ -20,6 +20,12 @@ namespace Api.Controllers
         {
             return Ok(await _hospitalService.GetAllAsync());
         }
+        
+        [HttpGet("GetDto/{id}")]
+        public async Task<IActionResult> GetDtoById([FromRoute] int id)
+        {
+            return Ok(await _hospitalService.GetHospDto(id));
+        }
 
         [HttpGet("Count")]
         public async Task<IActionResult> Count()

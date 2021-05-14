@@ -15,6 +15,6 @@ namespace Business.Abstract
         Task<int> CountAsync();
         
         Task<List<GetCityDto>> GetAll();
-
+        
     }
 }

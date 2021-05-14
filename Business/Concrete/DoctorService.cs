@@ -53,20 +53,20 @@ namespace Business.Concrete
         }
         
         [SecurityAspect(PersonType.Admin)]
-        public async Task<GetDoctorDto> GetAsync(int doctorId)
+        public async Task<UpdateDoctorDto> GetAsync(int doctorId)
         {
             return await _doctorRepo.TableNoTracking.Where(x => x.Id == doctorId)
                 .Include(x => x.Department)
                 .Include(x => x.Degree)
-                .Select(x => new GetDoctorDto
+                .Select(x => new UpdateDoctorDto
                 {
                     Id = x.Id,
                     Email = x.Email,
                     FirstName = x.Person.FirstName,
                     LastName = x.Person.LastName,
                     Gsm = x.Person.Gsm,
-                    DepartmentName = x.Department.Description,
-                    DegreeName = x.Degree.Description
+                    DepartmentId = x.DepartmentId,
+                    DegreeId = x.DegreeId,
                 })
                 .FirstOrDefaultAsync();
         }
@@ -133,17 +133,20 @@ namespace Business.Concrete
             return res;
         }
         
-        [SecurityAspect(PersonType.Admin)]
-        public async Task<Result> UpdateAsync( int doctorId,  InsertDoctorDto insertDoctorDto)
-        {
-            var doctor = await _doctorRepo.GetAsync(doctorId);
 
-            doctor.Person.FirstName = insertDoctorDto.FirstName;
-            doctor.Person.LastName = insertDoctorDto.LastName;
-            doctor.Person.Gsm = insertDoctorDto.Gsm;
-            doctor.Email = insertDoctorDto.Email;
-            doctor.DegreeId = insertDoctorDto.DegreeId;
-            doctor.DepartmentId = insertDoctorDto.DepartmentId;
+        [SecurityAspect(PersonType.Admin)]
+        public async Task<Result> UpdateAsync( int doctorId,  InsertDoctorDto doctorDto)
+        {
+            var doctor = await _doctorRepo.TableNoTracking.Where(x => x.Id == doctorId)
+                .Include(x => x.Person)
+                .SingleOrDefaultAsync();
+
+            doctor.Person.FirstName = doctorDto.FirstName;
+            doctor.Person.LastName = doctorDto.LastName;
+            doctor.Person.Gsm = doctorDto.Gsm;
+            doctor.Email = doctorDto.Email;
+            doctor.DegreeId = doctorDto.DegreeId;
+            doctor.DepartmentId = doctorDto.DepartmentId;
             
             return await _doctorRepo.UpdateAsync(doctor);
         }
@@ -239,5 +242,6 @@ namespace Business.Concrete
                                     .Where(x => x.PersonId == personId)
                                     .FirstOrDefaultAsync();
         }
+        
     }
 }
