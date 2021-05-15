@@ -44,5 +44,12 @@ namespace Business.Concrete
             
             return await base.InsertAsync(entity);
         }
+
+        public override async Task<Result> UpdateAsync(DoctorAdvice entity)
+        {
+            var data = await _repository.GetAsync(x => x.Id == entity.Id);
+            data.Description = entity.Description;
+            return await _repository.UpdateAsync(data);
+        }
     }
 }

@@ -21,16 +21,18 @@ namespace Business.Concrete
     public class DoctorService : IDoctorService
     {
         private readonly IRepository<Doctor> _doctorRepo;
+        private readonly IRepository<Person> _personRepo;
         private readonly IRepository<QuestionPool> _questionRepo;
         private readonly SmsHelper _smsHelper;
         private readonly IUserService _userService;
         
-        public DoctorService(IRepository<Doctor> repository, IRepository<QuestionPool> questionRepo, IUserService userService, SmsHelper smsHelper)
+        public DoctorService(IRepository<Doctor> repository, IRepository<QuestionPool> questionRepo, IUserService userService, SmsHelper smsHelper, IRepository<Person> personRepo)
         {
             _doctorRepo = repository;
             _questionRepo = questionRepo;
             _userService = userService;
             _smsHelper = smsHelper;
+            _personRepo = personRepo;
         }
         
         [SecurityAspect(PersonType.Admin)]
@@ -102,7 +104,7 @@ namespace Business.Concrete
             };
 
             await _doctorRepo.InsertAsync(doctor);
-            var hospital =  _doctorRepo.TableNoTracking
+            var hospital = await  _doctorRepo.TableNoTracking
                 .Include(x => x.Department)
                 .Where(x => x.PersonId == doctor.PersonId)
                 .Select(x => x.Department.Hospital.Description)
@@ -110,7 +112,7 @@ namespace Business.Concrete
                 
                 
             await _smsHelper.SendAsync(new List<string> {doctor.Person.Gsm},
-                "Welcome to the "+ hospital + " Hospital \n You are registered to patientTracker.net as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
+                "Welcome to the "+ hospital + " \n You are registered to patientTracker.net as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
 
 
             var result = await _doctorRepo.TableNoTracking.Where(x => x.PersonId == doctor.PersonId)
@@ -138,17 +140,24 @@ namespace Business.Concrete
         public async Task<Result> UpdateAsync( int doctorId,  InsertDoctorDto doctorDto)
         {
             var doctor = await _doctorRepo.TableNoTracking.Where(x => x.Id == doctorId)
-                .Include(x => x.Person)
                 .SingleOrDefaultAsync();
 
-            doctor.Person.FirstName = doctorDto.FirstName;
-            doctor.Person.LastName = doctorDto.LastName;
-            doctor.Person.Gsm = doctorDto.Gsm;
             doctor.Email = doctorDto.Email;
             doctor.DegreeId = doctorDto.DegreeId;
             doctor.DepartmentId = doctorDto.DepartmentId;
             
-            return await _doctorRepo.UpdateAsync(doctor);
+            var result =  await _doctorRepo.UpdateAsync(doctor);
+            if (!result.Success)
+            {
+                return new ErrorResult();
+            }
+
+            var person = await _personRepo.GetAsync(x => x.Id == doctor.PersonId);
+            person.FirstName = doctorDto.FirstName;
+            person.LastName = doctorDto.LastName;
+            person.Gsm = doctorDto.Gsm;
+
+            return await _personRepo.UpdateAsync(person);
         }
 
         
@@ -158,7 +167,8 @@ namespace Business.Concrete
             var doctor = await _doctorRepo.GetAsync(id);
             if (doctor != null)
             {
-                return await _doctorRepo.DeleteAsync(doctor);
+                var person = await _personRepo.GetAsync(x => x.Id == doctor.PersonId);
+                return await _personRepo.DeleteAsync(person);
             }
 
             return null;

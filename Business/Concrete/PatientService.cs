@@ -21,6 +21,7 @@ namespace Business.Concrete
     public class PatientService : IPatientService
     {
         private readonly IRepository<Patient> _repository;
+        private readonly IRepository<Person> _personRepo;
         private readonly SmsHelper _smsHelper;
         private readonly IUserService _userService;
         private readonly IRepository<DoctorPatient> _doctorPatientRepo;
@@ -28,7 +29,7 @@ namespace Business.Concrete
         private readonly IPatientAnswerService _patientAnswerService;
 
 
-        public PatientService(IRepository<Patient> repository,IUserService userService, SmsHelper smsHelper, IRepository<DoctorPatient> doctorPatientRepo, IRepository<Doctor> doctorRepo, IPatientAnswerService patientAnswerService)
+        public PatientService(IRepository<Patient> repository,IUserService userService, SmsHelper smsHelper, IRepository<DoctorPatient> doctorPatientRepo, IRepository<Doctor> doctorRepo, IPatientAnswerService patientAnswerService, IRepository<Person> personRepo)
         {
             _repository = repository;
             _userService = userService;
@@ -36,12 +37,14 @@ namespace Business.Concrete
             _doctorPatientRepo = doctorPatientRepo;
             _doctorRepo = doctorRepo;
             _patientAnswerService = patientAnswerService;
+            _personRepo = personRepo;
         }
 
 
-        public async Task<List<GetPatientDto>> GetAllAsync()
+        public async Task<List<GetPatientDto>> GetAllActivesAsync()
         {
             return await _repository.TableNoTracking
+                .Where(x => x.IsBlocked == true)
                 .Select(p => new GetPatientDto
             {
                 Id = p.Id,
@@ -56,6 +59,46 @@ namespace Business.Concrete
                 DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault()
 
             }).ToListAsync();
+        }
+        
+        public async Task<List<GetPatientDto>> GetAllAsync()
+        {
+            return await _repository.TableNoTracking
+                .Select(p => new GetPatientDto
+                {
+                    Id = p.Id,
+                    IdentityNumber = p.IdentityNumber,
+                    FirstName = p.Person.FirstName,
+                    LastName = p.Person.LastName,
+                    Email = p.Email,
+                    Gsm = p.Person.Gsm,
+                    HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(p.Id),
+                    Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList(),
+                    Danger =  _patientAnswerService.CountRiskyAnswers(p.Id),
+                    DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault()
+
+                }).ToListAsync();
+        }
+
+        
+        public async Task<List<GetPatientDto>> GetAllPassivesAsync()
+        {
+            return await _repository.TableNoTracking
+                .Where(x => x.IsBlocked == false)
+                .Select(p => new GetPatientDto
+                {
+                    Id = p.Id,
+                    IdentityNumber = p.IdentityNumber,
+                    FirstName = p.Person.FirstName,
+                    LastName = p.Person.LastName,
+                    Email = p.Email,
+                    Gsm = p.Person.Gsm,
+                    HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(p.Id),
+                    Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList(),
+                    Danger =  _patientAnswerService.CountRiskyAnswers(p.Id),
+                    DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault()
+
+                }).ToListAsync();
         }
 
         
@@ -97,6 +140,7 @@ namespace Business.Concrete
                 IdentityNumber = insertPatientDto.IdentityNumber,
                 Email = insertPatientDto.Email,
                 PatientDiseases = new List<PatientDisease>(),
+                IsBlocked = true,
                 
                 Person = new Person
                 {
@@ -148,27 +192,37 @@ namespace Business.Concrete
         
         public async Task<Result> UpdateAsync(int patientId, InsertPatientDto insertPatientDto)
         {
-            var patient = await _repository.GetAsync(patientId);
-
-            patient.Person.FirstName = insertPatientDto.FirstName;
-            patient.Person.LastName = insertPatientDto.LastName;
-            patient.Person.Gsm = insertPatientDto.Gsm;
+            var patient = await _repository.TableNoTracking
+                .Where(x => x.Id == patientId)
+                .FirstOrDefaultAsync();
+            
+            
             patient.Email = insertPatientDto.Email;
             patient.IdentityNumber = insertPatientDto.IdentityNumber;
             
-            return await _repository.UpdateAsync(patient);
+            var result =  await _repository.UpdateAsync(patient);
+            if (!result.Success)
+            {
+                return new ErrorResult();
+            }
+            
+            var person = await _personRepo.GetAsync(x => x.Id == patient.PersonId);
+            person.FirstName = insertPatientDto.FirstName;
+            person.LastName = insertPatientDto.LastName;
+            person.Gsm = insertPatientDto.Gsm;
+
+            return await _personRepo.UpdateAsync(person);
         }
 
         
         public async Task<Result> DeleteAsync(int id)
         {
-            var patient = await _repository.GetAsync(id);
-            if (patient != null)
-            {
-                return await _repository.DeleteAsync(patient);
-            }
+            var patient = await _repository.TableNoTracking
+                .Where(x => x.Id == id)
+                .Include(x => x.Person).FirstOrDefaultAsync();
+            patient.IsBlocked = false;
 
-            return null;
+            return await _repository.UpdateAsync(patient);
         }
         
         

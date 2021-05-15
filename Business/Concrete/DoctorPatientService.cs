@@ -40,7 +40,7 @@ namespace Business.Concrete
         }
 
         [SecurityAspect(PersonType.Doctor)]
-        public async Task<List<GetPatientDto>> GetPatientListOfDoctor(int doctorId)
+        public async Task<List<GetPatientDto>> GetActivePatientListOfDoctor(int doctorId)
         {
             var doctor = await _doctorRepo.TableNoTracking
                 .Include(x => x.Department)
@@ -51,6 +51,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Where(x => x.DoctorId == doctor.Id)
                 .Include(x => x.Patient)
                 .Include(x => x.Doctor)
+                .Where(x => x.Patient.IsBlocked == true)
                 .Include(x => x.Doctor.Department)
                 .Select(x => new GetPatientDto
                 {
@@ -67,6 +68,37 @@ namespace Business.Concrete
                     
                 }).ToListAsync();
         }
+        
+        [SecurityAspect(PersonType.Doctor)]
+        public async Task<List<GetPatientDto>> GetPassivePatientListOfDoctor(int doctorId)
+        {
+            var doctor = await _doctorRepo.TableNoTracking
+                .Include(x => x.Department)
+                .Where(x => x.PersonId == doctorId)
+                .FirstOrDefaultAsync();
+            
+            
+            return await _repository.TableNoTracking.Where(x => x.DoctorId == doctor.Id)
+                .Include(x => x.Patient)
+                .Include(x => x.Doctor)
+                .Where(x => x.Patient.IsBlocked == false)
+                .Include(x => x.Doctor.Department)
+                .Select(x => new GetPatientDto
+                {
+                    Id = x.Patient.Id,
+                    IdentityNumber = x.Patient.IdentityNumber,
+                    Email = x.Patient.Email,
+                    FirstName = x.Patient.Person.FirstName,
+                    LastName = x.Patient.Person.LastName,
+                    Gsm = x.Patient.Person.Gsm,
+                    HealthScore =  _patientAnswerService.GetTotalScoreOfPatient(x.Patient.Id),
+                    Danger =  _patientAnswerService.CountRiskyAnswers(x.Patient.Id),
+                    DepartmentId = x.Doctor.DepartmentId,
+                    HospitalId = x.Doctor.Department.HospitalId
+                    
+                }).ToListAsync();
+        }
+
 
         [SecurityAspect(PersonType.Patient)]
         public async Task<List<GetDoctorDto>> GetDoctorListOfPatient(int patientId)

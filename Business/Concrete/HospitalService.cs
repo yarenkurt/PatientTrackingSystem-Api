@@ -39,7 +39,8 @@ namespace Business.Concrete
                     Address = t.Address,
                     DistrictName = t.District.Description,
                     CityName = t.District.City.Description,
-                    CountryName = t.District.City.Country.Description
+                    CountryName = t.District.City.Country.Description,
+                    DistrictId = t.DistrictId
                 }).ToListAsync();
         }
         
@@ -64,7 +65,10 @@ namespace Business.Concrete
                     Address = t.Address,
                     DistrictName = t.District.Description,
                     CityName = t.District.City.Description,
-                    CountryName = t.District.City.Country.Description
+                    CountryName = t.District.City.Country.Description,
+                    DistrictId = t.DistrictId,
+                    CityId = t.District.CityId,
+                    CountryId = t.District.City.CountryId
                 }).FirstOrDefaultAsync();
         }
     }

@@ -469,6 +469,11 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasDefaultValueSql("space(0)");
 
+                    b.Property<bool>("IsBlocked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
@@ -780,7 +785,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Admin", b =>
                 {
                     b.HasOne("Entities.Concrete.Person", "Person")
-                        .WithMany()
+                        .WithMany("Admins")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -877,9 +882,9 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Person", "Person")
-                        .WithMany()
+                        .WithMany("Doctors")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Degree");
@@ -944,9 +949,9 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Patient", b =>
                 {
                     b.HasOne("Entities.Concrete.Person", "Person")
-                        .WithMany()
+                        .WithMany("Patients")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -1055,6 +1060,15 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Patient", b =>
                 {
                     b.Navigation("PatientDiseases");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Person", b =>
+                {
+                    b.Navigation("Admins");
+
+                    b.Navigation("Doctors");
+
+                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,9 +9,10 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public string Description { get; set; }
         
-        [JsonIgnore]
         public int DepartmentId { get; set; }
-        public string CreatedUserName { get; set; } //Claimsten alınacak
+        
+        [JsonIgnore]
+        public string CreatedUserName { get; set; }
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }
 

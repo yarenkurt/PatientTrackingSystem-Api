@@ -22,14 +22,16 @@ namespace Business.Concrete
     public class AdminService : IAdminService
     {
         private readonly IRepository<Admin> _repository;
+        private readonly IRepository<Person> _personRepo;
         private readonly SmsHelper _smsHelper;
         private readonly IUserService _userService;
 
-        public AdminService(IRepository<Admin> repository, IUserService userService, SmsHelper smsHelper)
+        public AdminService(IRepository<Admin> repository, IUserService userService, SmsHelper smsHelper, IRepository<Person> personRepo)
         {
             _repository = repository;
             _userService = userService;
             _smsHelper = smsHelper;
+            _personRepo = personRepo;
         }
         
     
@@ -106,12 +108,20 @@ namespace Business.Concrete
         {
             var admin = await _repository.GetAsync(adminId);
 
+            admin.Email = insertAdminDto.Email;
+
+            var result = await _repository.UpdateAsync(admin);
+            if (!result.Success)
+            {
+                return new ErrorResult();
+            }
+            
+            var person = await _personRepo.GetAsync(x => x.Id == admin.PersonId);
+           
             admin.Person.FirstName = insertAdminDto.FirstName;
             admin.Person.LastName = insertAdminDto.LastName;
             admin.Person.Gsm = insertAdminDto.Gsm;
-            admin.Email = insertAdminDto.Email;
-
-            return await _repository.UpdateAsync(admin);
+            return await _personRepo.UpdateAsync(person);
         }
 
         public async Task<Result> DeleteAsync(int id)

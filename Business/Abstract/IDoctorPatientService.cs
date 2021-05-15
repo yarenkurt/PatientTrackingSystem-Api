@@ -10,7 +10,9 @@ namespace Business.Abstract
     {
         Task<int> CountPatientOfDoctor(int doctorId);
         
-        Task<List<GetPatientDto>> GetPatientListOfDoctor(int doctorId);
+        Task<List<GetPatientDto>> GetActivePatientListOfDoctor(int doctorId);
+        Task<List<GetPatientDto>> GetPassivePatientListOfDoctor(int doctorId);
+
         Task<List<GetDoctorDto>> GetDoctorListOfPatient(int patientId);
 
         //Hasta ve doktor bazında gruplama?
