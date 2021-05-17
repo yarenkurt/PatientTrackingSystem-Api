@@ -7,6 +7,7 @@ using Business.Validations;
 using Core.Aspects.Security;
 using Core.Aspects.Validation;
 using Core.Enums;
+using Core.Results;
 using DataAccess.Repositories;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace Business.Concrete
     
         public async Task<List<Department>> GetAllAsync(int hospitalId)
         {
-            return await _repository.GetAllAsync(d => d.HospitalId == hospitalId);
+            return await _repository.GetAllAsync(d => d.HospitalId == hospitalId && d.IsActive == true);
         }
         
 
@@ -35,8 +36,17 @@ namespace Business.Concrete
         public async Task<int> CountAsync(int hospitalId)
         {
             return await _repository.TableNoTracking
-                .Where(x => x.HospitalId == hospitalId)
+                .Where(x => x.HospitalId == hospitalId && x.IsActive == true)
                 .CountAsync();
+        }
+
+
+        public override async Task<Result> DeleteAsync(int id)
+        {
+            var dept = await _repository.GetAsync(id);
+            dept.IsActive = false;
+
+            return await _repository.UpdateAsync(dept);
         }
     }
 }

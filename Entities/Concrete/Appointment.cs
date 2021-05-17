@@ -9,6 +9,7 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
+        public bool IsActive { get; set; } = true;
         
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }

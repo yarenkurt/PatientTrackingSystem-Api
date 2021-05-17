@@ -28,5 +28,11 @@ namespace Api.Controllers
         {
             return Ok(await _patientAnswerService.GetAllAnswers(patientId));
         }
+        
+        [HttpGet("AnswerHistoryOfPatient")]
+        public async Task<IActionResult> GetAnswerHistoryOfPatient([FromQuery, Required] int patientId)
+        {
+            return Ok(await _patientAnswerService.GetAnswerHistory(patientId));
+        }
     }
 }

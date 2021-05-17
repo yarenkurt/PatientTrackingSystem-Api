@@ -3,7 +3,7 @@
     public class GetAdminDto
     {
         public int PersonId { get; set; }
-        public bool IsBlocked { get; set; }
+        public bool IsActive { get; set; }
 
         public string UserName { get; set; }
         public string FirstName { get; set; }

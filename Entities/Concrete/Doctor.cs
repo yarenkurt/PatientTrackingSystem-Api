@@ -10,7 +10,7 @@ namespace Entities.Concrete
         public int DegreeId { get; set; }
         public int PersonId { get; set; }
         public string Email { get; set; }
-        public bool IsBlocked { get; set; }
+        public bool IsActive { get; set; }
 
         [JsonIgnore]
         public Department Department { get; set; }

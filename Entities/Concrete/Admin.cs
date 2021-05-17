@@ -7,7 +7,7 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public int PersonId { get; set; }
         public string Email { get; set; }
-        public bool IsBlocked { get; set; }
+        public bool IsActive { get; set; }
         
         public Person Person { get; set; }
     }

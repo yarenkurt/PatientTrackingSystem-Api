@@ -72,9 +72,9 @@ namespace DataAccess.Repositories.EF
                     _context.Entry(local).State = EntityState.Detached;
                 
                 _context.Entry(entity).State = EntityState.Detached;
-                Entity.Update(entity);
+                _context.Update(entity);
                 await SaveChangesAsync();
-               
+                _context.Entry(entity).State = EntityState.Detached;
                 return new SuccessDataResult<TEntity>(entity);
             }
             catch (Exception e)

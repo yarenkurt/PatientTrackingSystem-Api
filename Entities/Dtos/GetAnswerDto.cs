@@ -1,4 +1,6 @@
-﻿namespace Entities.Dtos
+﻿using System;
+
+namespace Entities.Dtos
 {
     public class GetAnswerDto
     {
@@ -8,5 +10,6 @@
         public string AnswerDesc { get; set; }
         public decimal PatientScore { get; set; }
         public bool Result { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace DataAccess.Extensions
         {
             foreach (var fk in mb.Model.GetEntityTypes().SelectMany(t => t.GetForeignKeys()).Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade))
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
+                
 
             foreach (var property in mb.Model.GetEntityTypes().SelectMany(t => t.GetProperties().OrderBy(x => x.Name)))
             {

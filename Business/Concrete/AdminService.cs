@@ -22,14 +22,16 @@ namespace Business.Concrete
     public class AdminService : IAdminService
     {
         private readonly IRepository<Admin> _repository;
+        private readonly IRepository<Person> _personRepo;
         private readonly SmsHelper _smsHelper;
         private readonly IUserService _userService;
 
-        public AdminService(IRepository<Admin> repository, IUserService userService, SmsHelper smsHelper)
+        public AdminService(IRepository<Admin> repository, IUserService userService, SmsHelper smsHelper, IRepository<Person> personRepo)
         {
             _repository = repository;
             _userService = userService;
             _smsHelper = smsHelper;
+            _personRepo = personRepo;
         }
         
     
@@ -39,7 +41,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Select(x => new GetAdminDto
             {
                 PersonId = x.PersonId,
-                IsBlocked = x.IsBlocked,
+                IsActive = x.IsActive,
                 UserName = x.Person.UserName,
                 FirstName = x.Person.FirstName,
                 LastName = x.Person.LastName,
@@ -57,7 +59,7 @@ namespace Business.Concrete
             var admin = new Admin
             {
                 Email = insertAdminDto.Email,
-                IsBlocked = false,
+                IsActive = true,
                 Person = new Person
                 {
                     FirstName = insertAdminDto.FirstName,
@@ -88,7 +90,7 @@ namespace Business.Concrete
                 FirstName = result.Person.FirstName,
                 LastName = result.Person.LastName,
                 Gsm = result.Person.Gsm,
-                IsBlocked = admin.IsBlocked
+                IsActive = admin.IsActive
             });
 
             return res;
@@ -106,19 +108,29 @@ namespace Business.Concrete
         {
             var admin = await _repository.GetAsync(adminId);
 
+            admin.Email = insertAdminDto.Email;
+
+            var result = await _repository.UpdateAsync(admin);
+            if (!result.Success)
+            {
+                return new ErrorResult();
+            }
+            
+            var person = await _personRepo.GetAsync(x => x.Id == admin.PersonId);
+           
             admin.Person.FirstName = insertAdminDto.FirstName;
             admin.Person.LastName = insertAdminDto.LastName;
             admin.Person.Gsm = insertAdminDto.Gsm;
-            admin.Email = insertAdminDto.Email;
-
-            return await _repository.UpdateAsync(admin);
+            return await _personRepo.UpdateAsync(person);
         }
 
         public async Task<Result> DeleteAsync(int id)
         {
             var entity = await _repository.GetAsync(id);
+
+            entity.IsActive = false;
             if (entity == null) return new ErrorResult("Data not found");
-            return await _repository.DeleteAsync(entity);
+            return await _repository.UpdateAsync(entity);
         }
     }
 }

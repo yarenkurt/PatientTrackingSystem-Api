@@ -9,10 +9,7 @@ namespace Api.Installers.Services
     {
         public void InstallServices(IServiceCollection services)
         {
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            services.AddMvc().AddJsonOptions(options => {   options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve; });
             services.AddControllers();
             services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
             services.AddCors(options =>

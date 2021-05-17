@@ -33,7 +33,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("space(0)");
 
-                    b.Property<bool>("IsBlocked")
+                    b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
@@ -65,6 +65,11 @@ namespace DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("space(0)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("QuestionPoolId")
                         .HasColumnType("int");
@@ -100,6 +105,11 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -207,6 +217,11 @@ namespace DataAccess.Migrations
                     b.Property<int>("HospitalId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.HasKey("Id");
 
                     b.HasIndex("HospitalId");
@@ -230,6 +245,11 @@ namespace DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("space(0)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.HasKey("Id");
 
@@ -282,7 +302,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("space(0)");
 
-                    b.Property<bool>("IsBlocked")
+                    b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
@@ -469,6 +489,11 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasDefaultValueSql("space(0)");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
@@ -500,6 +525,11 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("Convert(Date,GetDate())");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -536,6 +566,11 @@ namespace DataAccess.Migrations
                     b.Property<int>("DiseaseId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -558,6 +593,9 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -746,6 +784,11 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasDefaultValueSql("space(0)");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<int>("LowerLimit")
                         .HasColumnType("int");
 
@@ -791,9 +834,9 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.AnswerPool", b =>
                 {
                     b.HasOne("Entities.Concrete.QuestionPool", "QuestionPool")
-                        .WithMany()
+                        .WithMany("Answers")
                         .HasForeignKey("QuestionPoolId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("QuestionPool");
@@ -944,9 +987,9 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Patient", b =>
                 {
                     b.HasOne("Entities.Concrete.Person", "Person")
-                        .WithMany()
+                        .WithMany("Patients")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -1055,6 +1098,16 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Patient", b =>
                 {
                     b.Navigation("PatientDiseases");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Person", b =>
+                {
+                    b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.QuestionPool", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,10 +16,16 @@ namespace Api.Controllers
             _appointmentService = appointmentService;
         }
 
-        [HttpGet("Patients")]
+        [HttpGet("ByPatient")]
         public async Task<IActionResult> GetByPatient([FromQuery, Required] int patientId)
         {
-            return Ok(await _appointmentService.GetAllByPatient(patientId));
+            return Ok(await _appointmentService.GetAllActivesByPatient(patientId));
+        }
+        
+        [HttpGet("ByPatientsExpired")]
+        public async Task<IActionResult> GetExpiredByPatient([FromQuery, Required] int patientId)
+        {
+            return Ok(await _appointmentService.GetAllActivesByPatient(patientId));
         }
 
         [HttpGet("Doctors")]

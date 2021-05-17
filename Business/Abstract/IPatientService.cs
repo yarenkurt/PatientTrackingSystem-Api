@@ -8,11 +8,14 @@ namespace Business.Abstract
 {
     public interface IPatientService 
     {
+       Task<List<GetPatientDto>> GetAllActivesAsync();
+       Task<List<GetPatientDto>> GetAllPassivesAsync();
        Task<List<GetPatientDto>> GetAllAsync();
+
         Task<GetPatientDto> GetAsync(int id);
         Task<DataResult<GetPatientDto>> InsertAsync(InsertPatientDto insertPatientDto);
         Task<Result> UpdateAsync(int patientId,InsertPatientDto entity);
         Task<Result> DeleteAsync(int id);
-        
+
     }
 }

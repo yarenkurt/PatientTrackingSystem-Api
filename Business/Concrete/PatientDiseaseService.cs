@@ -55,7 +55,7 @@ namespace Business.Concrete
         public async Task<int> GetId(PatientDisease patDisease)
         {
             PatientDisease disease = await _repository.TableNoTracking
-                .Where(x => x.PatientId == patDisease.PatientId && x.DiseaseId == patDisease.DiseaseId)
+                .Where(x => x.PatientId == patDisease.PatientId && x.DiseaseId == patDisease.DiseaseId && x.IsActive == true)
                 .FirstOrDefaultAsync();
             return disease.Id;
         }

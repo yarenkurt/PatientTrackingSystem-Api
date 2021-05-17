@@ -13,6 +13,7 @@ namespace Entities.Concrete
         public decimal Score { get; set; }
         public string AnswerDescription { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; } = true;
         
         [JsonIgnore]
         public bool Result { get; set; }

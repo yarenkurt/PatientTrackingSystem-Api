@@ -16,10 +16,16 @@ namespace Api.Controllers
             _doctorPatientService = doctorPatientService;
         }
 
-        [HttpGet("PatientsOfDoctor")]
-        public async Task<IActionResult> GetPatientsOfDoctor([FromQuery, Required] int doctorId)
+        [HttpGet("ActivePatientsOfDoctor")]
+        public async Task<IActionResult> GetActivePatientsOfDoctor([FromQuery, Required] int doctorId)
         {
-            return Ok(await _doctorPatientService.GetPatientListOfDoctor(doctorId));
+            return Ok(await _doctorPatientService.GetActivePatientListOfDoctor(doctorId));
+        }
+        
+        [HttpGet("RemovedPatientsOfDoctor")]
+        public async Task<IActionResult> GetPassivePatientsOfDoctor([FromQuery, Required] int doctorId)
+        {
+            return Ok(await _doctorPatientService.GetPassivePatientListOfDoctor(doctorId));
         }
         
         

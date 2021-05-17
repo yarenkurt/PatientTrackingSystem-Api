@@ -9,6 +9,7 @@ namespace Entities.Concrete
         public int PatientId { get; set; }
         public int DiseaseId { get; set; }
 
+        public bool IsActive { get; set; }
         [JsonIgnore]
         public Patient Patient { get; set; }
         [JsonIgnore]

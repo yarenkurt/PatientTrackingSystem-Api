@@ -44,5 +44,7 @@ namespace Business.Concrete
             
             return await base.InsertAsync(entity);
         }
+
+        
     }
 }

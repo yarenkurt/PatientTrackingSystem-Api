@@ -25,6 +25,19 @@ namespace Api.Controllers
             return Ok(await _patientService.GetAllAsync());
         }
         
+        
+        [HttpGet("Actives")]
+        public async Task<IActionResult> GetAllActives()
+        {
+            return Ok(await _patientService.GetAllActivesAsync());
+        }
+        
+        [HttpGet("Removed")]
+        public async Task<IActionResult> GetAllRemoved()
+        {
+            return Ok(await _patientService.GetAllPassivesAsync());
+        }
+        
         [HttpGet("ById/{patientId}")]
         public async Task<IActionResult> GetById([FromRoute, Required] int patientId)
         {
@@ -43,8 +56,8 @@ namespace Api.Controllers
             return Ok(await _patientService.UpdateAsync(patientId,patientDto));
         }
         
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return Ok(await _patientService.DeleteAsync(id));
         }
