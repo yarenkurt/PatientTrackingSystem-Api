@@ -40,6 +40,11 @@ namespace Business.Concrete
                 }).ToListAsync();
         }
 
+        public async Task<List<PatientQuestion>> GetAll()
+        {
+            return await _repository.GetAllAsync();
+        }
+
         [SecurityAspect(PersonType.Doctor)]
 
         public async Task<int> GetId(PatientQuestion patientQuestion)

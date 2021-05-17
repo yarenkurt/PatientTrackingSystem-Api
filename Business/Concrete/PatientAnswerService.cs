@@ -119,5 +119,10 @@ namespace Business.Concrete
 
             return answer.Id;
         }
+
+        public async Task<List<PatientAnswer>> GetAll()
+        {
+            return await _repository.GetAllAsync();
+        }
     }
 }

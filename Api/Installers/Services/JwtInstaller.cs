@@ -16,8 +16,8 @@ namespace Api.Installers.Services
                 Issuer = "patientTracking.net",
                 Audience = "patientTracking.net",
                 SecurityKey = "F2peYX7865Yk8wztCxg8jzZGF5yEx4vu4TK4mN8DLtsVpnGa3V5jabYjFhGf",
-                AccessTokenExpiration = 70000,
-                RefreshTokenExpiration = 60
+                AccessTokenExpiration = 1000000,
+                RefreshTokenExpiration = 1000000
             };
             
             services.AddSingleton(jwtOptions);

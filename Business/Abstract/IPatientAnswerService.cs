@@ -10,6 +10,7 @@ namespace Business.Abstract
     {
         Task<List<GetAnswerDto>> GetAllAnswers(int patientId);
         Task<List<GetAnswerDto>> GetAnswerHistory(int patientId);
+        Task<List<PatientAnswer>> GetAll();
 
         decimal GetTotalScoreOfPatient(int patientId);
         int CountRiskyAnswers(int patientId);

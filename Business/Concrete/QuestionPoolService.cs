@@ -70,15 +70,33 @@ namespace Business.Concrete
             question.IsActive = false;
 
             var answerList = await _answerRepo.TableNoTracking.Where(x => x.QuestionPoolId == question.Id).ToListAsync();
-            
-            foreach (var answerPool in answerList)
-            {
-                answerPool.IsActive = false;
-                await _answerRepo.UpdateAsync(answerPool);
-            }
 
-            await _patAnswerService.DeleteAsync(await _patAnswerService.GetId(question.Id));
-            await _patQuestionService.DeleteAsync(await _patQuestionService.GetIdByQuestion(question.Id));
+            if (answerList.Count > 0)
+            {
+                foreach (var answerPool in answerList)
+                {
+                    answerPool.IsActive = false;
+                    await _answerRepo.UpdateAsync(answerPool);
+                }
+            };
+
+           var patAns = await _patAnswerService.GetAll();
+           foreach (var patientAnswer in patAns)
+           {
+               if (patientAnswer.QuestionPoolId == question.Id)
+               {
+                   await _patAnswerService.DeleteAsync(await _patAnswerService.GetId(question.Id));
+               }
+           }
+
+           var patQuestion = await _patQuestionService.GetAll();
+           foreach (var patientQuestion in patQuestion)
+           {
+               if (patientQuestion.QuestionPoolId == question.Id)
+               {
+                   await _patQuestionService.DeleteAsync(await _patQuestionService.GetIdByQuestion(question.Id));
+               }
+           }
 
             return await _questionRepo.UpdateAsync(question);
         }
