@@ -36,7 +36,7 @@ namespace Business.Concrete
 
         public async Task<int> CountPatientOfDoctor(int doctorId)
         {
-            return await _repository.TableNoTracking.CountAsync(x => x.DoctorId == doctorId);
+            return await _repository.TableNoTracking.CountAsync(x => x.DoctorId == doctorId && x.Patient.IsActive == true);
         }
 
         [SecurityAspect(PersonType.Doctor)]
@@ -51,7 +51,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Where(x => x.DoctorId == doctor.Id)
                 .Include(x => x.Patient)
                 .Include(x => x.Doctor)
-                .Where(x => x.Patient.IsBlocked == true)
+                .Where(x => x.Patient.IsActive == true)
                 .Include(x => x.Doctor.Department)
                 .Select(x => new GetPatientDto
                 {
@@ -81,7 +81,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Where(x => x.DoctorId == doctor.Id)
                 .Include(x => x.Patient)
                 .Include(x => x.Doctor)
-                .Where(x => x.Patient.IsBlocked == false)
+                .Where(x => x.Patient.IsActive == false)
                 .Include(x => x.Doctor.Department)
                 .Select(x => new GetPatientDto
                 {
@@ -105,6 +105,7 @@ namespace Business.Concrete
         {
             return await _repository.TableNoTracking.Where(x => x.PatientId == patientId)
                 .Include(x => x.Doctor)
+                .Where(x => x.Doctor.IsActive == true)
                 .Select(x => new GetDoctorDto
                 {
                     Email = x.Doctor.Email,

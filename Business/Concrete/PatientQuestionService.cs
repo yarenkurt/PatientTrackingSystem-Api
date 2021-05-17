@@ -32,6 +32,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Where(x => x.PatientId == patientId)
                 .Include(x => x.QuestionPool)
                 .Include(x => x.Patient)
+                .Where(x => x.IsActive == true)
                 .Select(x => new GetPatientQuestionDto
                 {
                     PatientName = x.Patient.Person.FirstName + " " +  x.Patient.Person.LastName,
@@ -45,12 +46,28 @@ namespace Business.Concrete
         {
             PatientQuestion question = await _repository.TableNoTracking
                 .Where(x => x.PatientId == patientQuestion.PatientId &&
-                            x.QuestionPoolId == patientQuestion.QuestionPoolId)
+                            x.QuestionPoolId == patientQuestion.QuestionPoolId &&
+                            x.IsActive == true)
                 .FirstOrDefaultAsync();
 
             return question.Id;
         }
         
-        
+        public async Task<int> GetIdByQuestion(int questionId)
+        {
+            PatientQuestion question = await _repository.TableNoTracking
+                .Where(x => x.QuestionPoolId == questionId)
+                .FirstOrDefaultAsync();
+
+            return question.Id;
+        }
+
+        public override async Task<Result> DeleteAsync(int id)
+        {
+            var patQuestion = await _repository.GetAsync(id);
+            patQuestion.IsActive = false;
+
+            return await _repository.UpdateAsync(patQuestion);
+        }
     }
 }

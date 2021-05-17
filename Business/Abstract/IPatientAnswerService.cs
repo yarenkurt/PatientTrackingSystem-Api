@@ -9,8 +9,12 @@ namespace Business.Abstract
     public interface IPatientAnswerService : IServiceRepository<PatientAnswer>
     {
         Task<List<GetAnswerDto>> GetAllAnswers(int patientId);
+        Task<List<GetAnswerDto>> GetAnswerHistory(int patientId);
+
         decimal GetTotalScoreOfPatient(int patientId);
         int CountRiskyAnswers(int patientId);
+        Task<int> GetId(int questionId);
+
 
     }
 }

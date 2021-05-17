@@ -41,6 +41,7 @@ namespace Business.Concrete
             return await _doctorRepo.TableNoTracking
                 .Include(x => x.Department)
                 .Include(x => x.Degree)
+                .Where(x => x.IsActive == true)
                 .Select(x => new GetDoctorDto
                 {
                     Id = x.Id,
@@ -60,6 +61,7 @@ namespace Business.Concrete
             return await _doctorRepo.TableNoTracking.Where(x => x.Id == doctorId)
                 .Include(x => x.Department)
                 .Include(x => x.Degree)
+                .Where(x => x.IsActive == true)
                 .Select(x => new UpdateDoctorDto
                 {
                     Id = x.Id,
@@ -84,7 +86,7 @@ namespace Business.Concrete
             var doctor = new Doctor
             {
                 Email = insertDoctorDto.Email,
-                IsBlocked = false,
+                IsActive = true,
                 DepartmentId = insertDoctorDto.DepartmentId,
                 DegreeId = insertDoctorDto.DegreeId,
                 Person = new Person
@@ -93,7 +95,7 @@ namespace Business.Concrete
                     LastName = insertDoctorDto.LastName,
                     Gsm = insertDoctorDto.Gsm,
                     CreatedAt = DateTime.Now,
-                    CreatedUserName = "",
+                    CreatedUserName = _userService.FullName,
                     PersonType = PersonType.Doctor,
                     UserName = insertDoctorDto.Email,
                     PasswordHash = passwordHash,
@@ -165,13 +167,9 @@ namespace Business.Concrete
         public async Task<Result> DeleteAsync(int id)
         {
             var doctor = await _doctorRepo.GetAsync(id);
-            if (doctor != null)
-            {
-                var person = await _personRepo.GetAsync(x => x.Id == doctor.PersonId);
-                return await _personRepo.DeleteAsync(person);
-            }
+            doctor.IsActive = false;
 
-            return null;
+            return await _doctorRepo.UpdateAsync(doctor);
         }
         
         
@@ -181,6 +179,7 @@ namespace Business.Concrete
             return await _doctorRepo.TableNoTracking.Where(x => x.DepartmentId == deptId)
                 .Include(x => x.Department)
                 .Include(x => x.Degree)
+                .Where(x => x.IsActive == true)
                 .Select(x => new GetDoctorDto
                 {
                     Email = x.Email,
@@ -200,6 +199,7 @@ namespace Business.Concrete
             return await _doctorRepo.TableNoTracking.Where(x => x.DegreeId == degreeId)
                 .Include(x => x.Department)
                 .Include(x => x.Degree)
+                .Where(x => x.IsActive == true)
                 .Select(x => new GetDoctorDto
                 {
                     Email = x.Email,
@@ -218,7 +218,7 @@ namespace Business.Concrete
         {
             return await _doctorRepo.TableNoTracking
                 .Include(x => x.Department)
-                .Where(x => x.Department.HospitalId == hospitalId)
+                .Where(x => x.Department.HospitalId == hospitalId && x.IsActive == true)
                 .CountAsync();
         }
 
@@ -229,6 +229,7 @@ namespace Business.Concrete
             return await _doctorRepo.TableNoTracking
                 .Include(x => x.Department)
                 .Where(x => x.Department.HospitalId == hospitalId)
+                .Where(x => x.IsActive == true)
                 .Select(x => new GetDoctorDto
                 {
                     Id = x.Id,

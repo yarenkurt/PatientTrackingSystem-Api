@@ -9,6 +9,7 @@ namespace Entities.Concrete
         public int QuestionPoolId { get; set; }
         public string Description { get; set; }
         public decimal Score { get; set; }
+        public bool IsActive { get; set; } = true;
 
         [JsonIgnore]
         public QuestionPool QuestionPool { get; set; }

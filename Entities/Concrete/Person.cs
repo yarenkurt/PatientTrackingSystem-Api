@@ -24,8 +24,6 @@ namespace Entities.Concrete
         public DateTime CreatedAt { get; set; }
         public string  CreatedUserName { get; set; }
 
-        public ICollection<Doctor> Doctors { get; set; }
         public ICollection<Patient> Patients { get; set; }
-        public ICollection<Admin> Admins { get; set; }
     }
 }

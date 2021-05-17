@@ -31,6 +31,25 @@ namespace Business.Concrete
         {
             return await _repository.TableNoTracking.Where(x => x.PatientId == patientId)
                 .Include(x => x.QuestionPool)
+                .Where(x => x.IsActive == true)
+                .Select(x => new GetAnswerDto
+                {
+                    QuestionDesc = x.QuestionPool.Description,
+                    UpperLimit = x.QuestionPool.UpperLimit,
+                    LowerLimit = x.QuestionPool.LowerLimit,
+                    AnswerDesc = x.AnswerDescription,
+                    PatientScore = x.Score,
+                    Result = x.Result,
+                    CreatedAt = x.CreatedAt
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<GetAnswerDto>> GetAnswerHistory(int patientId)
+        {
+            return await _repository.TableNoTracking.Where(x => x.PatientId == patientId)
+                .Include(x => x.QuestionPool)
+                .Where(x => x.IsActive == false)
                 .Select(x => new GetAnswerDto
                 {
                     QuestionDesc = x.QuestionPool.Description,
@@ -42,7 +61,7 @@ namespace Business.Concrete
                 })
                 .ToListAsync();
         }
-
+        
         public override Task<DataResult<PatientAnswer>> InsertAsync(PatientAnswer entity)
         {
             var question = _questionRepo.TableNoTracking
@@ -63,6 +82,8 @@ namespace Business.Concrete
             {
                 entity.Result = false;
             }
+
+            entity.IsActive = true;
             
             return base.InsertAsync(entity);
         }
@@ -79,6 +100,24 @@ namespace Business.Concrete
             return  _repository.TableNoTracking
                 .Where(x => x.PatientId == patientId)
                 .Count(x => x.Result == false);
+        }
+
+
+        public override async Task<Result> DeleteAsync(int id)
+        {
+            var patAnswer = await _repository.GetAsync(id);
+
+            patAnswer.IsActive = false;
+            return await _repository.UpdateAsync(patAnswer);
+        }
+        
+        public async Task<int> GetId(int questionId)
+        {
+            PatientAnswer answer = await _repository.TableNoTracking
+                .Where(x => x.QuestionPoolId == questionId && x.IsActive == true)
+                .FirstOrDefaultAsync();
+
+            return answer.Id;
         }
     }
 }

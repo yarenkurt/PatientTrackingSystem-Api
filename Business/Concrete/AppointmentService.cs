@@ -7,6 +7,7 @@ using Business.Validations;
 using Core.Aspects.Security;
 using Core.Aspects.Validation;
 using Core.Enums;
+using Core.Results;
 using DataAccess.Repositories;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -29,12 +30,17 @@ namespace Business.Concrete
         //Return appointments that belongs to specific patient
         [SecurityAspect(PersonType.Patient)]
 
-        public async Task<List<Appointment>> GetAllByPatient(int patientId)
+        public async Task<List<Appointment>> GetAllActivesByPatient(int patientId)
         {
-            return await _repository.GetAllAsync(a => a.PatientId == patientId);
+            return await _repository.GetAllAsync(a => a.PatientId == patientId && a.IsActive == true);
         }
+        
+        public async Task<List<Appointment>> GetAllExpiredByPatient(int patientId)
+        {
+            return await _repository.GetAllAsync(a => a.PatientId == patientId && a.IsActive == false);
+        }
+        
 
-        //Return appointments that belongs to specific doctor
         [SecurityAspect(PersonType.Doctor)]
 
         public async Task<List<GetAppointmentDto>> GetAllByDoctor(int doctorId)
@@ -42,6 +48,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Where((x => x.DoctorId == doctorId))
                 .Include(x => x.Doctor)
                 .Include(x => x.Patient)
+                .Where(x => x.IsActive == true)
                 .Select(x => new GetAppointmentDto
                 {
                     Id = x.Id,
@@ -58,6 +65,16 @@ namespace Business.Concrete
         public async Task<List<Appointment>> GetAllByPatientAndDoctor(int patientId, int doctorId)
         {
             return await _repository.GetAllAsync(a => a.PatientId == patientId && a.DoctorId == doctorId);
+        }
+        
+
+        public override async Task<Result> DeleteAsync(int id)
+        {
+            var appointment = await _repository.GetAsync(id);
+
+            appointment.IsActive = false;
+
+            return await _repository.UpdateAsync(appointment);
         }
     }
 }

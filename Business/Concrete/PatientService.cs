@@ -44,7 +44,7 @@ namespace Business.Concrete
         public async Task<List<GetPatientDto>> GetAllActivesAsync()
         {
             return await _repository.TableNoTracking
-                .Where(x => x.IsBlocked == true)
+                .Where(x => x.IsActive == true)
                 .Select(p => new GetPatientDto
             {
                 Id = p.Id,
@@ -84,7 +84,7 @@ namespace Business.Concrete
         public async Task<List<GetPatientDto>> GetAllPassivesAsync()
         {
             return await _repository.TableNoTracking
-                .Where(x => x.IsBlocked == false)
+                .Where(x => x.IsActive == false)
                 .Select(p => new GetPatientDto
                 {
                     Id = p.Id,
@@ -140,7 +140,7 @@ namespace Business.Concrete
                 IdentityNumber = insertPatientDto.IdentityNumber,
                 Email = insertPatientDto.Email,
                 PatientDiseases = new List<PatientDisease>(),
-                IsBlocked = true,
+                IsActive = true,
                 
                 Person = new Person
                 {
@@ -220,7 +220,7 @@ namespace Business.Concrete
             var patient = await _repository.TableNoTracking
                 .Where(x => x.Id == id)
                 .Include(x => x.Person).FirstOrDefaultAsync();
-            patient.IsBlocked = false;
+            patient.IsActive = false;
 
             return await _repository.UpdateAsync(patient);
         }
