@@ -44,3 +44,12 @@ C:\Users\kubra\Desktop\PatientTrackerProjeDemo\PatientTrackerApi\patientTracker\
 C:\Users\kubra\Desktop\PatientTrackerProjeDemo\PatientTrackerApi\patientTracker\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
 C:\Users\kubra\Desktop\PatientTrackerProjeDemo\PatientTrackerApi\patientTracker\Core\obj\Debug\netcoreapp3.1\Core.dll
 C:\Users\kubra\Desktop\PatientTrackerProjeDemo\PatientTrackerApi\patientTracker\Core\obj\Debug\netcoreapp3.1\Core.pdb
+D:\Projects\2020\PatientTrackerApi\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+D:\Projects\2020\PatientTrackerApi\Core\bin\Debug\netcoreapp3.1\Core.dll
+D:\Projects\2020\PatientTrackerApi\Core\bin\Debug\netcoreapp3.1\Core.pdb
+D:\Projects\2020\PatientTrackerApi\Core\obj\Debug\netcoreapp3.1\Core.csprojAssemblyReference.cache
+D:\Projects\2020\PatientTrackerApi\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+D:\Projects\2020\PatientTrackerApi\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+D:\Projects\2020\PatientTrackerApi\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
+D:\Projects\2020\PatientTrackerApi\Core\obj\Debug\netcoreapp3.1\Core.dll
+D:\Projects\2020\PatientTrackerApi\Core\obj\Debug\netcoreapp3.1\Core.pdb

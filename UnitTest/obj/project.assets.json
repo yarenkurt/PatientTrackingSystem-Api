@@ -9122,19 +9122,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kubra\\.nuget\\packages\\": {}
+    "C:\\Users\\yaren\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\UnitTest\\UnitTest.csproj",
+      "projectUniqueName": "D:\\Projects\\2020\\PatientTrackerApi\\UnitTest\\UnitTest.csproj",
       "projectName": "UnitTest",
-      "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\UnitTest\\UnitTest.csproj",
-      "packagesPath": "C:\\Users\\kubra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\UnitTest\\obj\\",
+      "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\UnitTest\\UnitTest.csproj",
+      "packagesPath": "C:\\Users\\yaren\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\2020\\PatientTrackerApi\\UnitTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\kubra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yaren\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9148,20 +9148,20 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Api\\Api.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Api\\Api.csproj"
+            "D:\\Projects\\2020\\PatientTrackerApi\\Api\\Api.csproj": {
+              "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\Api\\Api.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Business\\Business.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Business\\Business.csproj"
+            "D:\\Projects\\2020\\PatientTrackerApi\\Business\\Business.csproj": {
+              "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\Business\\Business.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj"
+            "D:\\Projects\\2020\\PatientTrackerApi\\Core\\Core.csproj": {
+              "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\Core\\Core.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\DataAccess\\DataAccess.csproj"
+            "D:\\Projects\\2020\\PatientTrackerApi\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\DataAccess\\DataAccess.csproj"
             },
-            "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Entities\\Entities.csproj": {
-              "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Entities\\Entities.csproj"
+            "D:\\Projects\\2020\\PatientTrackerApi\\Entities\\Entities.csproj": {
+              "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\Entities\\Entities.csproj"
             }
           }
         }
@@ -9219,7 +9219,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
