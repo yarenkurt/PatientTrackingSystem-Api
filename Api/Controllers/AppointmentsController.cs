@@ -34,5 +34,12 @@ namespace Api.Controllers
             return Ok(await _appointmentService.GetAllByDoctor(doctorId));
         }
 
+
+        [HttpGet("Closest")]
+        public async Task<IActionResult> GetClosestAppointment([FromQuery, Required] int patientId)
+        {
+            return Ok(await _appointmentService.GetClosestAppointment(patientId));
+        }
+
     }
 }

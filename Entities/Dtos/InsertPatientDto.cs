@@ -1,4 +1,6 @@
-﻿namespace Entities.Dtos
+﻿using System;
+
+namespace Entities.Dtos
 {
     public class InsertPatientDto
     {
@@ -7,7 +9,9 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gsm { get; set; }
-        //public string Password { get; set; }
+        public int Age { get; set; }
+        public double Weight { get; set; }
+        public int Height { get; set; }
 
     }
 }

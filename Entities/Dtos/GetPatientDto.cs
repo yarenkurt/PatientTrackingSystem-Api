@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Entities.Dtos
 {
@@ -10,6 +11,9 @@ namespace Entities.Dtos
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gsm { get; set; }
+        public int Age { get; set; }
+        public double Weight { get; set; }
+        public int Height { get; set; }
         public decimal HealthScore { get; set; }
         public int Danger { get; set; }
         public int DepartmentId { get; set; }

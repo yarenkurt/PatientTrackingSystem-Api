@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
@@ -28,7 +29,7 @@ namespace Business.Concrete
         
         
         //Return appointments that belongs to specific patient
-        [SecurityAspect(PersonType.Patient)]
+        [SecurityAspect(PersonType.Null)]
 
         public async Task<List<Appointment>> GetAllActivesByPatient(int patientId)
         {
@@ -66,7 +67,28 @@ namespace Business.Concrete
         {
             return await _repository.GetAllAsync(a => a.PatientId == patientId && a.DoctorId == doctorId);
         }
+
         
+        [SecurityAspect(PersonType.Null)]
+        public async Task<Appointment> GetClosestAppointment(int patientId)
+        {
+            var appointmentList = await _repository.GetAllAsync(x => x.PatientId == patientId && x.IsActive == true);
+
+            var closestAppointment = new Appointment();
+            var closestDate = new DateTime(9999, 12, 25);
+
+            foreach (var appointment in appointmentList)
+            {
+                if (DateTime.Compare(appointment.Date, closestDate) < 0)
+                {
+                    closestDate = appointment.Date;
+                    closestAppointment = appointment;
+                }
+            }
+
+            return closestAppointment;
+        }
+
 
         public override async Task<Result> DeleteAsync(int id)
         {
@@ -76,5 +98,6 @@ namespace Business.Concrete
 
             return await _repository.UpdateAsync(appointment);
         }
+        
     }
 }

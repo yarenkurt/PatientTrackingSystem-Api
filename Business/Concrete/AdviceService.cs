@@ -41,10 +41,16 @@ namespace Business.Concrete
         {
             var doctor = await _doctorRepo.GetAsync(x => x.PersonId == _userService.PersonId);
             entity.DepartmentId = doctor.DepartmentId;
+            entity.CreatedUserName = _userService.FullName;
             
             return await base.InsertAsync(entity);
         }
 
-        
+        public override Task<Result> UpdateAsync(DoctorAdvice entity)
+        {
+            entity.CreatedUserName = _userService.FullName;
+
+            return base.UpdateAsync(entity);
+        }
     }
 }
