@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Autofac/6.0.0": {
+      "Autofac/6.2.0": {
         "type": "package",
         "dependencies": {
           "System.Diagnostics.DiagnosticSource": "4.7.1"
@@ -1699,16 +1699,19 @@
     }
   },
   "libraries": {
-    "Autofac/6.0.0": {
-      "sha512": "tRVRXGxwXbQmPy1ZGso115O55ffVW4mWtufjOy7hduQ1BNVR1j7RQQjxpYuB6tJw5OrgqRWYVJLJ8RwYNz/j+A==",
+    "Autofac/6.2.0": {
+      "sha512": "BX8IM0GANE38uSr4QwXL4PgA8vWWYt2P5cZzipn/vDnf0fDbPSGKSHEroJ09rB7ANxdyf7MdEgVs+pvL8kwYCg==",
       "type": "package",
-      "path": "autofac/6.0.0",
+      "path": "autofac/6.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "autofac.6.0.0.nupkg.sha512",
+        "autofac.6.2.0.nupkg.sha512",
         "autofac.nuspec",
         "icon.png",
+        "lib/net5.0/Autofac.dll",
+        "lib/net5.0/Autofac.pdb",
+        "lib/net5.0/Autofac.xml",
         "lib/netstandard2.0/Autofac.dll",
         "lib/netstandard2.0/Autofac.pdb",
         "lib/netstandard2.0/Autofac.xml",
@@ -6081,6 +6084,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Autofac >= 6.2.0",
       "Autofac.Extensions.DependencyInjection >= 7.1.0",
       "Autofac.Extras.DynamicProxy >= 6.0.0",
       "FluentValidation >= 8.6.3",
@@ -6090,19 +6094,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yaren\\.nuget\\packages\\": {}
+    "C:\\Users\\kubra\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\2020\\PatientTrackerApi\\Core\\Core.csproj",
+      "projectUniqueName": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj",
       "projectName": "Core",
-      "projectPath": "D:\\Projects\\2020\\PatientTrackerApi\\Core\\Core.csproj",
-      "packagesPath": "C:\\Users\\yaren\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\2020\\PatientTrackerApi\\Core\\obj\\",
+      "projectPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\Core.csproj",
+      "packagesPath": "C:\\Users\\kubra\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kubra\\Desktop\\PatientTrackerProjeDemo\\PatientTrackerApi\\patientTracker\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\yaren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kubra\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6128,6 +6132,10 @@
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
+          "Autofac": {
+            "target": "Package",
+            "version": "[6.2.0, )"
+          },
           "Autofac.Extensions.DependencyInjection": {
             "target": "Package",
             "version": "[7.1.0, )"
@@ -6168,7 +6176,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
