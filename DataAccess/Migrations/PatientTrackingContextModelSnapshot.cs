@@ -114,11 +114,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("Time")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("time")
-                        .HasDefaultValueSql("'00:00'");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");

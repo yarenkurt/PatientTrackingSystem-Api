@@ -8,6 +8,5 @@ namespace Entities.Dtos
         public string DoctorName { get; set; }
         public string PatientName { get; set; }
         public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
     }
 }

@@ -12,7 +12,9 @@ namespace Business.Abstract
         Task<List<Appointment>> GetAllExpiredByPatient(int patientId);
 
         Task<List<GetAppointmentDto>> GetAllByDoctor(int doctorId);
-        Task<List<Appointment>> GetAllByPatientAndDoctor(int patientId,int doctorId);
+        Task<List<GetAppointmentDto>> GetAllExpiredByDoctor(int doctorId);
+
+        Task<GetAppointmentDto> GetByPatientAndDoctor(int patientId,int doctorId);
 
         Task<Appointment> GetClosestAppointment(int patientId);
     }

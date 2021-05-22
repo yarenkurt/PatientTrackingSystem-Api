@@ -14,7 +14,6 @@ namespace Entities.Concrete
         [JsonIgnore]
         public DateTime CreatedAt { get; set; }
         public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
         
         [JsonIgnore]
         public Doctor Doctor { get; set; }

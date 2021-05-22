@@ -33,7 +33,18 @@ namespace Api.Controllers
         {
             return Ok(await _appointmentService.GetAllByDoctor(doctorId));
         }
+        
+        [HttpGet("Doctors/Expired")]
+        public async Task<IActionResult> GetExpiredByDoctor([FromQuery, Required] int doctorId)
+        {
+            return Ok(await _appointmentService.GetAllExpiredByDoctor(doctorId));
+        }
 
+        [HttpGet("ByPatientDoctor")]
+        public async Task<IActionResult> GetByDoctor([FromQuery, Required] int patientId,[FromQuery, Required] int doctorId)
+        {
+            return Ok(await _appointmentService.GetByPatientAndDoctor(patientId,doctorId));
+        }
 
         [HttpGet("Closest")]
         public async Task<IActionResult> GetClosestAppointment([FromQuery, Required] int patientId)

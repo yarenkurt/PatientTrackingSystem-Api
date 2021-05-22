@@ -49,6 +49,7 @@ namespace Business.Concrete
             return await _repository.TableNoTracking.Where((x => x.DoctorId == doctorId))
                 .Include(x => x.Doctor)
                 .Include(x => x.Patient)
+                .OrderBy(x => x.Date)
                 .Where(x => x.IsActive == true)
                 .Select(x => new GetAppointmentDto
                 {
@@ -56,16 +57,43 @@ namespace Business.Concrete
                     DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
                     PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
                     Date = x.Date,
-                    Time = x.Time
+                }).ToListAsync();
+        }
+        
+        [SecurityAspect(PersonType.Doctor)]
+
+        public async Task<List<GetAppointmentDto>> GetAllExpiredByDoctor(int doctorId)
+        {
+            return await _repository.TableNoTracking.Where((x => x.DoctorId == doctorId))
+                .Include(x => x.Doctor)
+                .Include(x => x.Patient)
+                .OrderBy(x => x.Date)
+                .Where(x => x.IsActive == false)
+                .Select(x => new GetAppointmentDto
+                {
+                    Id = x.Id,
+                    DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
+                    PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
+                    Date = x.Date,
                 }).ToListAsync();
         }
 
         //Return appointments that belongs to specific patient and doctor
         [SecurityAspect(PersonType.Doctor)]
 
-        public async Task<List<Appointment>> GetAllByPatientAndDoctor(int patientId, int doctorId)
+        public async Task<GetAppointmentDto> GetByPatientAndDoctor(int patientId, int doctorId)
         {
-            return await _repository.GetAllAsync(a => a.PatientId == patientId && a.DoctorId == doctorId);
+            return await _repository.TableNoTracking.Where(x => x.DoctorId == doctorId && x.PatientId == patientId)
+                .Include(x => x.Doctor)
+                .Include(x => x.Patient)
+                .Where(x => x.IsActive == true)
+                .Select(x => new GetAppointmentDto
+                {
+                    Id = x.Id,
+                    DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
+                    PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
+                    Date = x.Date,
+                }).FirstOrDefaultAsync();
         }
 
         
@@ -98,6 +126,14 @@ namespace Business.Concrete
 
             return await _repository.UpdateAsync(appointment);
         }
+
+
+        public override async Task<DataResult<Appointment>> InsertAsync(Appointment entity)
+        {
+            entity.CreatedAt = DateTime.Now;
+            return await base.InsertAsync(entity);
+        }
+        
         
     }
 }
