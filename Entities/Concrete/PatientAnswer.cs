@@ -7,7 +7,6 @@ namespace Entities.Concrete
     public class PatientAnswer : IBaseEntity
     {
         public int Id { get; set; }
-        [JsonIgnore]
         public int PatientId { get; set; }
         public int QuestionPoolId { get; set; }
         public decimal Score { get; set; }

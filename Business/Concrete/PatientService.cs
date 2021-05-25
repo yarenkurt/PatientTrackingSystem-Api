@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Doctor)]
     public class PatientService : IPatientService
     {
         private readonly IRepository<Patient> _repository;
@@ -40,6 +39,8 @@ namespace Business.Concrete
             _personRepo = personRepo;
         }
 
+
+        [SecurityAspect(PersonType.Doctor)]
 
         public async Task<List<GetPatientDto>> GetAllActivesAsync()
         {
@@ -64,6 +65,8 @@ namespace Business.Concrete
             }).ToListAsync();
         }
         
+        [SecurityAspect(PersonType.Doctor)]
+
         public async Task<List<GetPatientDto>> GetAllAsync()
         {
             return await _repository.TableNoTracking
@@ -87,6 +90,8 @@ namespace Business.Concrete
         }
 
         
+        [SecurityAspect(PersonType.Doctor)]
+
         public async Task<List<GetPatientDto>> GetAllPassivesAsync()
         {
             return await _repository.TableNoTracking
@@ -111,6 +116,8 @@ namespace Business.Concrete
         }
 
         
+        [SecurityAspect(PersonType.Doctor)]
+
         public async Task<GetPatientDto> GetAsync(int patientId)
         {
             var doctor = await _doctorRepo.TableNoTracking
@@ -139,8 +146,36 @@ namespace Business.Concrete
                 }).FirstOrDefaultAsync();
         }
 
+
+        [SecurityAspect(PersonType.Null)]
+        public async Task<GetPatientDto> GetByPersonIdAsync(int personId)
+        {
+            return  await _repository.TableNoTracking.Include(p => p.Person)
+                .Where(p => p.PersonId == personId)
+                .Select(p => new GetPatientDto
+                {
+                    Id = p.Id,
+                    IdentityNumber = p.IdentityNumber,
+                    FirstName = p.Person.FirstName,
+                    LastName = p.Person.LastName,
+                    Email = p.Email,
+                    Gsm = p.Person.Gsm,
+                    Age = p.Age,
+                    Weight = p.Weight,
+                    Height = p.Height,
+                    HealthScore = _patientAnswerService.GetTotalScoreOfPatient(p.Id),
+                    Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList(),
+                    Danger = _patientAnswerService.CountRiskyAnswers(p.Id),
+                    DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault(),
+                }).FirstOrDefaultAsync();
+        }
+
+        
+
         
         [ValidationAspect(typeof(PatientInsertValidator))]
+        [SecurityAspect(PersonType.Doctor)]
+
         public async Task<DataResult<GetPatientDto>> InsertAsync(InsertPatientDto insertPatientDto)
         {
             //System will automatically create a random password with size 6.
@@ -208,6 +243,8 @@ namespace Business.Concrete
         }
 
         
+        [SecurityAspect(PersonType.Doctor)]
+
         public async Task<Result> UpdateAsync(int patientId, InsertPatientDto insertPatientDto)
         {
             var patient = await _repository.TableNoTracking
@@ -233,6 +270,8 @@ namespace Business.Concrete
         }
 
         
+        [SecurityAspect(PersonType.Doctor)]
+
         public async Task<Result> DeleteAsync(int id)
         {
             var patient = await _repository.TableNoTracking

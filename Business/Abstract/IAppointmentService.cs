@@ -8,7 +8,7 @@ namespace Business.Abstract
 {
     public interface IAppointmentService : IServiceRepository<Appointment>
     {
-        Task<List<Appointment>> GetAllActivesByPatient(int patientId);
+        Task<List<GetAppointmentDto>> GetAllActivesByPatient(int patientId);
         Task<List<Appointment>> GetAllExpiredByPatient(int patientId);
 
         Task<List<GetAppointmentDto>> GetAllByDoctor(int doctorId);
@@ -16,6 +16,6 @@ namespace Business.Abstract
 
         Task<GetAppointmentDto> GetByPatientAndDoctor(int patientId,int doctorId);
 
-        Task<Appointment> GetClosestAppointment(int patientId);
+        Task<GetAppointmentDto> GetClosestAppointment(int patientId);
     }
 }

@@ -13,7 +13,6 @@ using Entities.Concrete;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Doctor)]
     
     public class AdviceService : ServiceRepository<DoctorAdvice>, IAdviceService
     {
@@ -30,13 +29,15 @@ namespace Business.Concrete
         }
 
      
-        [DoctorSecurityAspect]
+        [SecurityAspect(PersonType.Null)]
         public async Task<List<DoctorAdvice>> GetAllByDept(int deptId)
         {
             return await _repository.GetAllAsync(a => a.DepartmentId == deptId);
         }
 
         [ValidationAspect(typeof(AdviceValidator))]
+        [SecurityAspect(PersonType.Doctor)]
+
         public override async Task<DataResult<DoctorAdvice>> InsertAsync(DoctorAdvice entity)
         {
             var doctor = await _doctorRepo.GetAsync(x => x.PersonId == _userService.PersonId);
@@ -45,6 +46,8 @@ namespace Business.Concrete
             
             return await base.InsertAsync(entity);
         }
+
+        [SecurityAspect(PersonType.Doctor)]
 
         public override Task<Result> UpdateAsync(DoctorAdvice entity)
         {

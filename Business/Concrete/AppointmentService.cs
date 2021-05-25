@@ -16,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Doctor)]
     [ValidationAspect(typeof(AppointmentValidator))]
     public class AppointmentService : ServiceRepository<Appointment>, IAppointmentService
     {
@@ -31,9 +30,21 @@ namespace Business.Concrete
         //Return appointments that belongs to specific patient
         [SecurityAspect(PersonType.Null)]
 
-        public async Task<List<Appointment>> GetAllActivesByPatient(int patientId)
+        public async Task<List<GetAppointmentDto>> GetAllActivesByPatient(int patientId)
         {
-            return await _repository.GetAllAsync(a => a.PatientId == patientId && a.IsActive == true);
+            return await _repository.TableNoTracking
+                .Include(x => x.Doctor)
+                .Include(x => x.Patient)
+                .Where(x => x.PatientId == patientId && x.IsActive == true)
+                .OrderByDescending(x => x.Date)
+                .Select(x => new GetAppointmentDto
+                {
+                    Id = x.Id,
+                    DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
+                    PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
+                    Date = x.Date,
+                    DepartmentName = x.Doctor.Department.Description
+                }).ToListAsync();
         }
         
         public async Task<List<Appointment>> GetAllExpiredByPatient(int patientId)
@@ -93,16 +104,28 @@ namespace Business.Concrete
                     DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
                     PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
                     Date = x.Date,
+                    DepartmentName = x.Doctor.Department.Description
                 }).FirstOrDefaultAsync();
         }
 
         
         [SecurityAspect(PersonType.Null)]
-        public async Task<Appointment> GetClosestAppointment(int patientId)
+        public async Task<GetAppointmentDto> GetClosestAppointment(int patientId)
         {
-            var appointmentList = await _repository.GetAllAsync(x => x.PatientId == patientId && x.IsActive == true);
+            var appointmentList = await _repository.TableNoTracking
+                .Include(x => x.Doctor)
+                .Include(x => x.Patient)
+                .Where(x => x.PatientId == patientId && x.IsActive == true)
+                .Select(x => new GetAppointmentDto
+                {
+                    Id = x.Id,
+                    DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
+                    PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
+                    Date = x.Date,
+                    DepartmentName = x.Doctor.Department.Description
+                }).ToListAsync();
 
-            var closestAppointment = new Appointment();
+            var closestAppointment = new GetAppointmentDto();
             var closestDate = new DateTime(9999, 12, 25);
 
             foreach (var appointment in appointmentList)
@@ -118,6 +141,8 @@ namespace Business.Concrete
         }
 
 
+        [SecurityAspect(PersonType.Doctor)]
+
         public override async Task<Result> DeleteAsync(int id)
         {
             var appointment = await _repository.GetAsync(id);
@@ -127,6 +152,8 @@ namespace Business.Concrete
             return await _repository.UpdateAsync(appointment);
         }
 
+
+        [SecurityAspect(PersonType.Doctor)]
 
         public override async Task<DataResult<Appointment>> InsertAsync(Appointment entity)
         {

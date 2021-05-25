@@ -10,11 +10,11 @@ using Core.Enums;
 using Core.Results;
 using DataAccess.Repositories;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete
 {
-    [SecurityAspect(PersonType.Doctor)]
     [ValidationAspect(typeof(PatientDiseaseValidator))]
     public class PatientDiseaseService : ServiceRepository<PatientDisease>, IPatientDiseaseService
     {
@@ -27,16 +27,29 @@ namespace Business.Concrete
         
         
         [SecurityAspect(PersonType.Patient)]
-        public async Task<List<PatientDisease>> GetAllByPatient(int patientId)
+        public async Task<List<GetPatDiseaseDto>> GetAllByPatient(int patientId)
         {
-            return await _repository.GetAllAsync(d => d.PatientId == patientId);
+            return await _repository.TableNoTracking
+                .Include(x => x.Disease)
+                .Where(d => d.PatientId == patientId)
+                .Select(x => new GetPatDiseaseDto
+                {
+                    Id = x.Id,
+                    DepartmentId = x.Disease.DepartmentId,
+                    DepartmentName = x.Disease.Department.Description,
+                    Description = x.Disease.Description
+                }).ToListAsync();
         }
 
         //Doctor ve admin görebilmeli
+        [SecurityAspect(PersonType.Null)]
+
         public async Task<List<PatientDisease>> GetAllByDepartment(int deptId)
         {
             return await _repository.GetAllAsync(d => d.Disease.DepartmentId == deptId);
         }
+
+        [SecurityAspect(PersonType.Null)]
 
         public async Task<List<PatientDisease>> GetAll()
         {

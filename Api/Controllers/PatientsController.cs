@@ -43,6 +43,15 @@ namespace Api.Controllers
         {
             return Ok(await _patientService.GetAsync(patientId));
         }
+        
+
+        [HttpGet("ByPersonId/{personId}")]
+
+        public async Task<IActionResult> GetByPersonIdAsync([FromRoute, Required] int personId)
+        {
+            return Ok(await _patientService.GetByPersonIdAsync(personId));
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] InsertPatientDto dto)

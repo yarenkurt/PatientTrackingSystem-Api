@@ -6,6 +6,7 @@ using Business.Repositories;
 using Business.Validations;
 using Core.Aspects.Validation;
 using Core.Results;
+using Core.Token;
 using DataAccess.Repositories;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -19,12 +20,14 @@ namespace Business.Concrete
         private readonly IRepository<PatientAnswer> _repository;
         private readonly IRepository<QuestionPool> _questionRepo;
         private readonly IRepository<AnswerPool> _answerRepo;
+        private IUserService _userService;
         
-        public PatientAnswerService(IRepository<PatientAnswer> repository, IRepository<QuestionPool> questionRepo, IRepository<AnswerPool> answerRepo) : base(repository)
+        public PatientAnswerService(IRepository<PatientAnswer> repository, IRepository<QuestionPool> questionRepo, IRepository<AnswerPool> answerRepo, IUserService userService) : base(repository)
         {
             _repository = repository;
             _questionRepo = questionRepo;
             _answerRepo = answerRepo;
+            _userService = userService;
         }
 
         public async Task<List<GetAnswerDto>> GetAllAnswers(int patientId)
