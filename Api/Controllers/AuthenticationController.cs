@@ -43,10 +43,10 @@ namespace Api.Controllers
         }
         
         
-        [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> PasswordChangeRequest([FromQuery, Required] string gsm)
+        [HttpGet("ForgotPassword")]
+        public async Task<IActionResult> PasswordChangeRequest([FromQuery, Required] string identityNumber)
         {
-            return Ok(await _authService.ForgotPassword(gsm));
+            return Ok(await _authService.ForgotPassword(identityNumber));
         }
         
 

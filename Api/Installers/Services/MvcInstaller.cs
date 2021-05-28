@@ -13,7 +13,8 @@ namespace Api.Installers.Services
             services.AddControllers();
             services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
             services.AddCors(options =>
-                options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
+                options.AddDefaultPolicy(builder => 
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
             );
 
         }

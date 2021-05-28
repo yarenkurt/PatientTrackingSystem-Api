@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Api.Repositories;
 using Business.Abstract;
+using Core.Token;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,11 @@ namespace Api.Controllers
     public class AppointmentsController : ControllerRepository<IAppointmentService, Appointment>
     {
         private readonly IAppointmentService _appointmentService;
-        
-        public AppointmentsController(IAppointmentService appointmentService) : base(appointmentService)
+        private readonly IUserService _userService;
+        public AppointmentsController(IAppointmentService appointmentService, IUserService userService) : base(appointmentService)
         {
             _appointmentService = appointmentService;
+            _userService = userService;
         }
 
         [HttpGet("ByPatient")]
@@ -47,9 +49,10 @@ namespace Api.Controllers
         }
 
         [HttpGet("Closest")]
-        public async Task<IActionResult> GetClosestAppointment([FromQuery, Required] int patientId)
+        public async Task<IActionResult> GetClosestAppointment()
         {
-            return Ok(await _appointmentService.GetClosestAppointment(patientId));
+            
+            return Ok(await _appointmentService.GetClosestAppointment(_userService.PersonId));
         }
 
     }

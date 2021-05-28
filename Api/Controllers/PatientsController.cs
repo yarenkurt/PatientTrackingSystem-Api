@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Token;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace Api.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
-
-        public PatientsController(IPatientService patientService)
+        private readonly IUserService _userService;
+        
+        public PatientsController(IPatientService patientService, IUserService userService)
         {
             _patientService = patientService;
+            _userService = userService;
         }
         
         
@@ -45,11 +48,10 @@ namespace Api.Controllers
         }
         
 
-        [HttpGet("ByPersonId/{personId}")]
-
-        public async Task<IActionResult> GetByPersonIdAsync([FromRoute, Required] int personId)
+        [HttpGet("MyProfile")]
+        public async Task<IActionResult> MyProfile()
         {
-            return Ok(await _patientService.GetByPersonIdAsync(personId));
+            return Ok(await _patientService.GetByPersonIdAsync(_userService.PersonId));
         }
 
 

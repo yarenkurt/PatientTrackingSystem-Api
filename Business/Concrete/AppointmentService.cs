@@ -109,35 +109,24 @@ namespace Business.Concrete
         }
 
         
-        [SecurityAspect(PersonType.Null)]
-        public async Task<GetAppointmentDto> GetClosestAppointment(int patientId)
+        [SecurityAspect(PersonType.Patient)]
+        public async Task<GetAppointmentDto> GetClosestAppointment(int personId)
         {
-            var appointmentList = await _repository.TableNoTracking
-                .Include(x => x.Doctor)
-                .Include(x => x.Patient)
-                .Where(x => x.PatientId == patientId && x.IsActive == true)
+            return await _repository.TableNoTracking
+                .Include(x => x.Doctor).ThenInclude(x=>x.Person)
+                .Include(x => x.Doctor).ThenInclude(x=>x.Department)
+                .Include(x => x.Patient).ThenInclude(x=>x.Person)
+                .Where(x => x.Patient.PersonId == personId && x.IsActive && x.Date >= DateTime.Now.Date)
                 .Select(x => new GetAppointmentDto
                 {
                     Id = x.Id,
-                    DoctorName = x.Doctor.Person.FirstName + " " + x.Doctor.Person.LastName,
-                    PatientName = x.Patient.Person.FirstName + " " + x.Patient.Person.LastName,
+                    DoctorName = $"{x.Doctor.Person.FirstName} {x.Doctor.Person.LastName}",
+                    PatientName = $"{x.Patient.Person.FirstName} {x.Patient.Person.LastName}",
                     Date = x.Date,
                     DepartmentName = x.Doctor.Department.Description
-                }).ToListAsync();
-
-            var closestAppointment = new GetAppointmentDto();
-            var closestDate = new DateTime(9999, 12, 25);
-
-            foreach (var appointment in appointmentList)
-            {
-                if (DateTime.Compare(appointment.Date, closestDate) < 0)
-                {
-                    closestDate = appointment.Date;
-                    closestAppointment = appointment;
-                }
-            }
-
-            return closestAppointment;
+                })
+                .OrderByDescending(x=>x.Date)
+                .FirstOrDefaultAsync();
         }
 
 

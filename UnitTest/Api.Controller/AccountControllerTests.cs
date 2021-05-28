@@ -15,7 +15,7 @@ namespace UnitTest.Api.Controller
         public async void GetAll_NotNull_OkAndPagedList()
         {
             var service = new MockPatientService().GetAll(new List<GetPatientDto>());
-            var controller = new PatientsController(service.Object);
+            var controller = new PatientsController(service.Object,null);
 
             var result = await controller.GetAll();
 

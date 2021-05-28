@@ -16,6 +16,6 @@ namespace Business.Abstract
 
         Task<GetAppointmentDto> GetByPatientAndDoctor(int patientId,int doctorId);
 
-        Task<GetAppointmentDto> GetClosestAppointment(int patientId);
+        Task<GetAppointmentDto> GetClosestAppointment(int personId);
     }
 }

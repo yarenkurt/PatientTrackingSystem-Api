@@ -147,7 +147,7 @@ namespace Business.Concrete
         }
 
 
-        [SecurityAspect(PersonType.Null)]
+        [SecurityAspect(PersonType.Patient)]
         public async Task<GetPatientDto> GetByPersonIdAsync(int personId)
         {
             return  await _repository.TableNoTracking.Include(p => p.Person)

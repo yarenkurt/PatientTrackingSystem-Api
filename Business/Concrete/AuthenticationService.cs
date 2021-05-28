@@ -110,18 +110,18 @@ namespace Business.Concrete
         }
 
 
-        public async Task<Result> ForgotPassword(string gsm)
+        public async Task<Result> ForgotPassword(string identityNumber)
         {
-            if (string.IsNullOrEmpty(gsm))
-                return new ErrorResult("Gsm is Wrong!");
+            if (string.IsNullOrEmpty(identityNumber))
+                return new ErrorResult("identity Number is Wrong!");
 
-            var user = await _personRepository.GetAsync(x => x.Gsm == gsm);
+            var user = await _personRepository.GetAsync(x => x.UserName == identityNumber);
             if (user == null)
-                return new ErrorResult("Gsm is not found!");
+                return new ErrorResult("identity Number is not found!");
 
 
             var password = RandomHelper.Mixed(6);
-            var result = await _smsHelper.SendAsync(new List<string>{gsm},"Your new password is "+password);
+            var result = await _smsHelper.SendAsync(new List<string>{user.Gsm},"Your new password is "+password);
             
             if (!result.Success)
                 return result;
@@ -129,8 +129,6 @@ namespace Business.Concrete
             HashingHelper.CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-
-
             result = await _personRepository.UpdateAsync(user);
             return !result.Success ? result : new SuccessResult("Your password is sent to your gsm!");
         }

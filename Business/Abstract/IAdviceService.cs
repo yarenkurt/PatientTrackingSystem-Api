@@ -8,5 +8,6 @@ namespace Business.Abstract
     public interface IAdviceService : IServiceRepository<DoctorAdvice>
     {
         Task<List<DoctorAdvice>> GetAllByDept(int deptId);
+        Task<List<DoctorAdvice>> GetMyAdvices(int personId);
     }
 }
