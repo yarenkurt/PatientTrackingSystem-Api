@@ -51,9 +51,14 @@ namespace Api.Controllers
         [HttpGet("Closest")]
         public async Task<IActionResult> GetClosestAppointment()
         {
-            
             return Ok(await _appointmentService.GetClosestAppointment(_userService.PersonId));
         }
 
+        
+        [HttpGet("MyAppointments")]
+        public async Task<IActionResult> GetMyAppointments()
+        {
+            return Ok(await _appointmentService.GetMyAppointments(_userService.PersonId));
+        }
     }
 }

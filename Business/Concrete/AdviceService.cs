@@ -41,11 +41,11 @@ namespace Business.Concrete
 
         public async Task<List<DoctorAdvice>> GetMyAdvices(int personId)
         {
-            var deptId =await _patientRepo.TableNoTracking.Where(x => x.PersonId == personId)
+            var listOfDeptId =await _patientRepo.TableNoTracking.Where(x => x.PersonId == personId)
                 .Include(x => x.PatientDiseases).ThenInclude(x => x.Disease)
                 .Select(x => x.PatientDiseases.FirstOrDefault().Disease.DepartmentId)
-                .FirstOrDefaultAsync();
-            return await _repository.GetAllAsync(a => a.DepartmentId == deptId);
+                .ToListAsync();
+            return await _repository.GetAllAsync(a => listOfDeptId.Contains(a.DepartmentId));
         }
 
         [ValidationAspect(typeof(AdviceValidator))]

@@ -97,6 +97,12 @@ namespace Business.Concrete
                 .Sum(x => x.Score);
         }
 
+        public async Task<decimal> GetMyTotalScore(int personId)
+        {
+            return await _repository.TableNoTracking.Include(x=>x.Patient).Where(x => x.Patient.PersonId == personId)
+                .SumAsync(x => x.Score);
+        }
+
 
         public int CountRiskyAnswers(int patientId)
         {

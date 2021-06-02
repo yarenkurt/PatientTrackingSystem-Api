@@ -8,6 +8,7 @@ namespace Business.Abstract
 {
     public interface IAppointmentService : IServiceRepository<Appointment>
     {
+        Task<List<GetAppointmentDto>> GetMyAppointments(int personId);
         Task<List<GetAppointmentDto>> GetAllActivesByPatient(int patientId);
         Task<List<Appointment>> GetAllExpiredByPatient(int patientId);
 

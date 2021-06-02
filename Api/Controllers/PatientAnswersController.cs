@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Api.Repositories;
 using Business.Abstract;
+using Core.Token;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,16 +12,23 @@ namespace Api.Controllers
     public class PatientAnswersController : ControllerRepository<IPatientAnswerService, PatientAnswer>
     {
         private readonly IPatientAnswerService _patientAnswerService;
-        
-        public PatientAnswersController(IPatientAnswerService patientAnswerService) : base(patientAnswerService)
+        private readonly IUserService _userService;
+        public PatientAnswersController(IPatientAnswerService patientAnswerService, IUserService userService) : base(patientAnswerService)
         {
             _patientAnswerService = patientAnswerService;
+            _userService = userService;
         }
 
         [HttpGet("TotalScoreOfPatient")]
         public IActionResult GetTotalScore([FromQuery, Required] int patientId)
         {
             return Ok( _patientAnswerService.GetTotalScoreOfPatient(patientId));
+        }
+        [HttpGet("MyTotalScore")]
+        public async Task<IActionResult> GetMyTotalScore()
+        {
+            var result = await _patientAnswerService.GetMyTotalScore(_userService.PersonId);
+            return Ok( new {Score=result});
         }
 
         [HttpGet("AnswersOfPatient")]

@@ -9,5 +9,7 @@ namespace Entities.Dtos
         public string PatientName { get; set; }
         public string DepartmentName { get; set; }
         public DateTime Date { get; set; }
+
+        public bool IsExpired { get; set; }
     }
 }

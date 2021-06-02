@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Business;
 using Business.Abstract;
 using Core.Token;
 using Entities.Dtos;
@@ -71,6 +72,12 @@ namespace Api.Controllers
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return Ok(await _patientService.DeleteAsync(id));
+        }
+        
+        [HttpPost("SOS")]
+        public async Task<IActionResult> Post([FromBody] SOSDto dto)
+        {
+            return Ok(await _patientService.SOSAsync(_userService.PersonId, dto));
         }
     }
 }

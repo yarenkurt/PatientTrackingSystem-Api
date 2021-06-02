@@ -17,6 +17,8 @@ namespace Business.Abstract
         Task<Result> UpdateAsync(int patientId,InsertPatientDto entity);
         Task<Result> DeleteAsync(int id);
         Task<GetPatientDto> GetByPersonIdAsync(int personId);
+        
+        Task<Result> SOSAsync(int personId,SOSDto sos);
 
     }
 }

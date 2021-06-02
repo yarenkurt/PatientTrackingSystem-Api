@@ -14,4 +14,11 @@ namespace Entities.Dtos
         public int Height { get; set; }
 
     }
+    public class SOSDto
+    {
+        
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+    }
 }

@@ -21,6 +21,7 @@ namespace Entities.Concrete
         
         [JsonIgnore]
         public ICollection<PatientDisease> PatientDiseases { get; set; }
+        public ICollection<PatientRelative> PatientRelatives { get; set; }
     }
 
 }

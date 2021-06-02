@@ -13,6 +13,7 @@ namespace Business.Abstract
         Task<List<PatientAnswer>> GetAll();
 
         decimal GetTotalScoreOfPatient(int patientId);
+        Task<decimal> GetMyTotalScore(int personId);
         int CountRiskyAnswers(int patientId);
         Task<int> GetId(int questionId);
 
