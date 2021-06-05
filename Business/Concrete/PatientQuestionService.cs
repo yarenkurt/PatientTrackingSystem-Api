@@ -28,7 +28,7 @@ namespace Business.Concrete
         }
 
 
-        [SecurityAspect(PersonType.Patient)]
+        [SecurityAspect(PersonType.Null)]
         public async Task<List<GetPatientQuestionDto>> GetAllQuestions(int patientId)
         {
             return await _repository.TableNoTracking.Where(x => x.PatientId == patientId)
