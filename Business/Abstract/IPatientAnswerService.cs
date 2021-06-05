@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Repositories;
+using Core.Results;
 using Entities.Concrete;
 using Entities.Dtos;
 
@@ -16,6 +17,9 @@ namespace Business.Abstract
         Task<decimal> GetMyTotalScore(int personId);
         int CountRiskyAnswers(int patientId);
         Task<int> GetId(int questionId);
+        Task<Result> InsertPatientAnswer(InsertPatientAnswerDto dto,int personId);
+        
+        
 
 
     }

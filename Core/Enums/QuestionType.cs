@@ -1,8 +1,10 @@
-﻿namespace Core.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Enums
 {
     public enum QuestionType
     {
-        MultipleChoice = 1,
-        NumericInput = 2
+        [Display(Name = "Multiple")]MultipleChoice = 1,
+        [Display(Name = "Numeric")]NumericInput = 2
     }
 }

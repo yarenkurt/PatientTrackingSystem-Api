@@ -20,14 +20,16 @@ namespace Business.Concrete
         private readonly IRepository<PatientAnswer> _repository;
         private readonly IRepository<QuestionPool> _questionRepo;
         private readonly IRepository<AnswerPool> _answerRepo;
+        private readonly IRepository<Patient> _patientRepo;
         private IUserService _userService;
         
-        public PatientAnswerService(IRepository<PatientAnswer> repository, IRepository<QuestionPool> questionRepo, IRepository<AnswerPool> answerRepo, IUserService userService) : base(repository)
+        public PatientAnswerService(IRepository<PatientAnswer> repository, IRepository<QuestionPool> questionRepo, IRepository<AnswerPool> answerRepo, IUserService userService, IRepository<Patient> patientRepo) : base(repository)
         {
             _repository = repository;
             _questionRepo = questionRepo;
             _answerRepo = answerRepo;
             _userService = userService;
+            _patientRepo = patientRepo;
         }
 
         public async Task<List<GetAnswerDto>> GetAllAnswers(int patientId)
@@ -132,6 +134,23 @@ namespace Business.Concrete
         public async Task<List<PatientAnswer>> GetAll()
         {
             return await _repository.GetAllAsync();
+        }
+        public async Task<Result> InsertPatientAnswer(InsertPatientAnswerDto dto, int personId)
+        {
+            var patientId = (await _patientRepo.GetAsync(x => x.PersonId == personId))?.Id ?? 0;
+            if (patientId == 0)
+            {
+                return new ErrorResult("Patient not found!");
+            }
+
+            var entity = new PatientAnswer
+            {
+                Score = dto.Score,
+                QuestionPoolId = dto.QuestionId,
+                AnswerDescription = dto.AnswerDescription,
+                PatientId = patientId
+            };
+            return await _repository.InsertAsync(entity);
         }
     }
 }

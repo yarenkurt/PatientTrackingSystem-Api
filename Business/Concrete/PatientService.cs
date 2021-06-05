@@ -21,6 +21,7 @@ namespace Business.Concrete
     {
         private readonly IRepository<Patient> _repository;
         private readonly IRepository<Person> _personRepo;
+        private readonly IRepository<PatientRelative> _patientRelativeRepo;
         private readonly SmsHelper _smsHelper;
         private readonly IUserService _userService;
         private readonly IRepository<DoctorPatient> _doctorPatientRepo;
@@ -30,7 +31,8 @@ namespace Business.Concrete
 
         public PatientService(IRepository<Patient> repository, IUserService userService, SmsHelper smsHelper,
             IRepository<DoctorPatient> doctorPatientRepo, IRepository<Doctor> doctorRepo,
-            IPatientAnswerService patientAnswerService, IRepository<Person> personRepo)
+            IPatientAnswerService patientAnswerService, IRepository<Person> personRepo,
+            IRepository<PatientRelative> patientRelativeRepo)
         {
             _repository = repository;
             _userService = userService;
@@ -39,6 +41,7 @@ namespace Business.Concrete
             _doctorRepo = doctorRepo;
             _patientAnswerService = patientAnswerService;
             _personRepo = personRepo;
+            _patientRelativeRepo = patientRelativeRepo;
         }
 
 
@@ -166,10 +169,12 @@ namespace Business.Concrete
 
         public async Task<Result> SOSAsync(int personId, SOSDto sos)
         {
-            var relatives = await _repository.TableNoTracking.Where(x=>x.PersonId==personId).Include(x => x.PatientRelatives).Select(x=>x.PatientRelatives).FirstOrDefaultAsync();
+            var patient = await _repository.TableNoTracking.Include(x=>x.Person).FirstOrDefaultAsync(x => x.PersonId == personId);
+            var relatives = await _patientRelativeRepo.TableNoTracking.Where(x => x.PatientId == patient.Id)
+                .ToListAsync();
             var url = $"http://maps.google.com/?q={sos.Latitude},{sos.Longitude}";
             var phones = relatives.Select(x => x.Gsm).ToList();
-            return await _smsHelper.SendAsync(phones, "Acil bana yardın edin. Bu konumdayım. " + url);
+            return await _smsHelper.SendAsync(phones, $"My Name is {patient.Person.FirstName} {patient.Person.LastName}, Help Me!! My Location :  " + url);
         }
 
         [ValidationAspect(typeof(PatientInsertValidator))]

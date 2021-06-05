@@ -5,6 +5,7 @@ using Api.Repositories;
 using Business.Abstract;
 using Core.Token;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -41,6 +42,12 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAnswerHistoryOfPatient([FromQuery, Required] int patientId)
         {
             return Ok(await _patientAnswerService.GetAnswerHistory(patientId));
+        }
+        [HttpPost("InsertPatientAnswer")]
+        public async Task<IActionResult> InsertPatientAnswer([FromBody] InsertPatientAnswerDto entity)
+        {
+            var personId = _userService.PersonId;
+            return Ok(await _patientAnswerService.InsertPatientAnswer(entity,personId));
         }
     }
 }

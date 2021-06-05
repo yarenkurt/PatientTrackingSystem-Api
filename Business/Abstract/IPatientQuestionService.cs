@@ -14,5 +14,9 @@ namespace Business.Abstract
         Task<int> GetId(PatientQuestion patientQuestion);
         Task<int> GetIdByQuestion(int questionId);
 
+        //Task<List<MyQuestionDto>> MyQuestions(int personId);
+        Task<List<QuestionsDto>> MyQuestions(int personId);
+        Task<QuestionDto> Questions(int id,int personId);
+
     }
 }
