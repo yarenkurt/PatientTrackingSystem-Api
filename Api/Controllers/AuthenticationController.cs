@@ -49,6 +49,11 @@ namespace Api.Controllers
             return Ok(await _authService.ForgotPassword(identityNumber));
         }
         
+        [HttpGet("ForgotPassword2")]
+        public async Task<IActionResult> PasswordChangeRequest2([FromQuery, Required] string gsm)
+        {
+            return Ok(await _authService.ForgotPasswordDoctorAdmin(gsm));
+        }
 
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout([FromBody, Required] int userId)

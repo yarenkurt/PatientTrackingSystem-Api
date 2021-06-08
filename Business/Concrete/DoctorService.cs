@@ -114,7 +114,7 @@ namespace Business.Concrete
                 
                 
             await _smsHelper.SendAsync(new List<string> {doctor.Person.Gsm},
-                "Welcome to the "+ hospital + " \n You are registered to patientTracker.net as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
+                "Welcome to the "+ hospital + " \n You are registered to patracker as Doctor by "+_userService.FullName+" \n Your password is " + randomPass);
 
 
             var result = await _doctorRepo.TableNoTracking.Where(x => x.PersonId == doctor.PersonId)

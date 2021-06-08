@@ -203,7 +203,7 @@ namespace Business.Concrete
                     Gsm = insertPatientDto.Gsm,
                     PersonType = PersonType.Patient,
                     CreatedAt = DateTime.Now,
-                    CreatedUserName = "",
+                    CreatedUserName = _userService.FullName,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                     RefreshToken = RandomHelper.Mixed(32)
@@ -221,7 +221,7 @@ namespace Business.Concrete
             });
 
             await _smsHelper.SendAsync(new List<string> {patient.Person.Gsm},
-                "Welcome to the YEDITEPE HOSPITAL \nYou are registered to patientTracker.net as Patient by " +
+                "Welcome to the YEDITEPE HOSPITAL \nYou are registered to patracker as Patient by " +
                 _userService.FullName + " \nLogin to the system with your ID \nYour password is " + randomPass);
 
 
