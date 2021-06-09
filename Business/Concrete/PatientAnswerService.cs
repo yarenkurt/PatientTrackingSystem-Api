@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
@@ -79,6 +80,9 @@ namespace Business.Concrete
                         UpperLimit = x.UpperLimit
                     }).FirstOrDefaultAsync();
 
+            Console.WriteLine("Result : "+question.Result);
+            var res = question.Result;
+            
             if (entity.Score <= question.Result.UpperLimit && entity.Score >= question.Result.LowerLimit)
             {
                 entity.Result = true;
@@ -150,6 +154,29 @@ namespace Business.Concrete
                 AnswerDescription = dto.AnswerDescription,
                 PatientId = patientId
             };
+            
+            var question = _questionRepo.TableNoTracking
+                .Where(x => x.Id == dto.QuestionId)
+                .Select(x => new QuestionPool
+                {
+                    Id = x.Id,
+                    DepartmentId = x.DepartmentId,
+                    LowerLimit = x.LowerLimit,
+                    UpperLimit = x.UpperLimit
+                }).FirstOrDefaultAsync();
+            
+            
+            if (entity.Score <= question.Result.UpperLimit && entity.Score >= question.Result.LowerLimit)
+            {
+                entity.Result = true;
+            }
+            else
+            {
+                entity.Result = false;
+            }
+
+            entity.IsActive = true;
+            
             return await _repository.InsertAsync(entity);
         }
     }

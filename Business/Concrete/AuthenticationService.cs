@@ -132,5 +132,25 @@ namespace Business.Concrete
             result = await _personRepository.UpdateAsync(user);
             return !result.Success ? result : new SuccessResult("Your password is sent to your gsm!");
         }
+
+        public async Task<Result> ForgotPasswordDoctorAdmin(string gsm)
+        {
+            var user = await _personRepository.GetAsync(x => x.Gsm == gsm);
+            if (user == null)
+                return new ErrorResult("Gsm is not found!");
+
+
+            var password = RandomHelper.Mixed(6);
+            var result = await _smsHelper.SendAsync(new List<string>{user.Gsm},"Your new password is "+password);
+            
+            if (!result.Success)
+                return result;
+
+            HashingHelper.CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            result = await _personRepository.UpdateAsync(user);
+            return !result.Success ? result : new SuccessResult("Your password is sent to your gsm!");
+        }
     }
 }

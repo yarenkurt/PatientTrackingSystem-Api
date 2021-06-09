@@ -7,7 +7,7 @@ namespace Business.Validations
     {
         public AdviceValidator()
         {
-            RuleFor(x => x.Description).NotEmpty().NotNull().MaximumLength(500);
+            //RuleFor(x => x.Description).NotEmpty().NotNull().MaximumLength(10000);
         }
     }
 }

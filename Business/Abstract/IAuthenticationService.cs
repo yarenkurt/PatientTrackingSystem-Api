@@ -12,6 +12,8 @@ namespace Business.Abstract
 
         Task<DataResult<TokenInfo>> RefreshAsync(string refreshToken);
 
-        Task<Result> ForgotPassword(string gsm);
+        Task<Result> ForgotPassword(string identityNumber);
+        Task<Result> ForgotPasswordDoctorAdmin(string gsm);
+
     }
 }
