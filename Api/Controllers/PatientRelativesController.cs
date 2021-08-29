@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    public class PatientRelativesService : ControllerRepository<IPatientRelativeService, PatientRelative>
+    public class PatientRelativesController : ControllerRepository<IPatientRelativeService, PatientRelative>
     {
         private readonly IPatientRelativeService _patientRelativeService;
         
-        public PatientRelativesService(IPatientRelativeService patientRelativeService) : base(patientRelativeService)
+        public PatientRelativesController(IPatientRelativeService patientRelativeService) : base(patientRelativeService)
         {
             _patientRelativeService = patientRelativeService;
         }

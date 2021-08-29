@@ -164,6 +164,7 @@ namespace Business.Concrete
                     Diseases = p.PatientDiseases.Select(x => x.Disease.Description).ToList(),
                     Danger = _patientAnswerService.CountRiskyAnswers(p.Id),
                     DepartmentId = p.PatientDiseases.Select(x => x.Disease.DepartmentId).FirstOrDefault(),
+                    EmergencyNumber = p.PatientRelatives.Select(x=>x.Gsm).FirstOrDefault()??""
                 }).FirstOrDefaultAsync();
         }
 

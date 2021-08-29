@@ -19,6 +19,8 @@ namespace Entities.Dtos
         public int DepartmentId { get; set; }
         public int HospitalId { get; set; }
         public  List<string> Diseases{ get; set; }
+        public string EmergencyNumber{ get; set; }
+        
         
     }
 }
